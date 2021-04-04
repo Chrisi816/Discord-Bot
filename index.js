@@ -8,10 +8,6 @@ const commands = require('./commands')
 client.on('ready', () => {
     console.log('Ich bin Bereit!')
 
-    command(client, 'Ping', (message) => {
-        message.channel.send('Pong!')
-
-    })
 })
   client.on('ready', () => {
 
@@ -37,6 +33,11 @@ client.on('ready', () => {
 
      command(client, 'tiktok', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zum Tiktok Account von vAzoniq! https://www.tiktok.com/@twitch.vazoniq7882?lang=de-DE')
+     })
+
+     command(client, 'maushaus', (message) => {
+        message.channel.send('Mit diesem Link kommst du zum Besten Youtuber auf Yt! ;) https://www.youtube.com/channel/UCqoQRnEXO1GaJMTSTFzpFBQ ')
+ 
      })
 
     // !member -> So viele Member sind aufm Server von vAzoniq!
@@ -73,13 +74,13 @@ client.on('ready', () => {
         })
     })
     
-    command(client, 'embed', (message) => {
+    command(client, 'embad', (message) => {
         const logo = 
               'https://s18.directupload.net/images/210330/ta7643ol.png'
 
         const embed = new Discord.MessageEmbed()
-        .setTitle('Der Stream von vAzoniq')
-        .setURL('https://www.twitch.tv/vazoniq7882')
+        .setTitle('```Update V.1.1```')
+        .setURL('https://docs.google.com/document/d/1JEgRshmmPRpjmBPYUuu9l395VmLSzX3opC8B0KX4vx8/edit?usp=sharing')
         .setAuthor(message.author.username)
         .setImage(logo)
         .setThumbnail(logo)
@@ -135,13 +136,57 @@ Das sind all unsere commands:
                     const { prefix } = config
                 client.user.setPresence({
             activity: {
-            name: `"${prefix}help" für Hilfe`
+            name: `${prefix}help for help (Developed by Chrisi)`
         },
     }) 
+    
+    command(client, 'ban', (message) => {
+        const { member, mentions } = message
+
+        const tag = `<@${member.id}>`
+
+        if (
+           member.hasPermission('ADMINISTRATOR') || 
+           member.hasPermission('BAN_MEMBER') 
+        ) {
+            const target = mentions.users.first()
+            if (target) {
+                const targetMember = message.guild.members.cache.get(target.id)
+                targetMember.ban()
+                message.channel.send(`${tag} Dieser User wurde gebannt!`)
+            } else {
+                message.channel.send(` ${tag} Bitte Tagge jemanden zum Bannen!`)
+            }
+        } else {
+          message.channel.send(
+           `${tag} Du hast keine Rechte diesen Command auszuführen!`
+        )
+      }
+    })
+    
+    command(client, 'kick', (message) => {
+        const { member, mentions } = message
+
+        const tag = `<@${member.id}>`
+
+        if (
+           member.hasPermission('ADMINISTRATOR') || 
+           member.hasPermission('KICK_MEMBER') 
+        ) {
+            const target = mentions.users.first()
+            if (target) {
+                const targetMember = message.guild.members.cache.get(target.id)
+                targetMember.kick()
+                message.channel.send(`${tag} Dieser User wurde gekickt!`)
+            } else {
+                message.channel.send(`${tag} Bitte Tagge jemanden zum Kicken!`)
+            }
+        } else {
+          message.channel.send(
+           `${tag} Du hast keine Rechte diesen Command auszuführen!`
+        )
+      }
+    })
 })
-
-
-
-
 
 client.login(config.token)
