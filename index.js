@@ -1,12 +1,40 @@
+const path = require('path')
+const fs = require ('fs')
 const Discord = require ('discord.js')
-const client = new Discord.Client()
+const client = new Discord.Client({partials: ['MESSAGE', 'CHANNEL', 'REACTION']})
 
 const config = require('./config.json')
 const command = require('./commands')
 const commands = require('./commands')
+const warnFile = require('./warns.json')
+const membercount = require('./member-count')
+const antiAd = require('./anti-ad')
+const inviteNotifications = require('./invite-notifications')
+
+antiAd(client)
+inviteNotifications(client)
+
+const baseFile = 'command-base.js'
+const commandBase = require (`./commands/${baseFile}`)
+
+const readCommands = (dir) => {
+   const files = fs.readdirSync(path.join(__dirname, dir))
+   for (const file of files) {
+       const stat = fs.lstatSync(path.join(__dirname, dir, file))
+       if (stat.isDirectory()) {
+           readCommands(path.join(dir,file))
+       } else if (file !== baseFile) {
+           const option = require(path.join(__dirname, dir, file))
+           commandBase(client, option)
+       }
+   }
+}
+
+readCommands('commands')
 
 client.on('ready', () => {
     console.log('Ich bin Bereit!')
+    membercount(client)
 
 })
   client.on('ready', () => {
@@ -39,13 +67,21 @@ client.on('ready', () => {
         message.channel.send('Mit diesem Link kommst du zum Besten Youtuber auf Yt! ;) https://www.youtube.com/channel/UCqoQRnEXO1GaJMTSTFzpFBQ ')
  
      })
+     command(client, 'ehre', (message) => {
+        message.channel.send(' kekw')
+        var json = {
+            random: Math.ceil(Math.random() * 10000)
+          }
+          
+          console.log(json);
+     })
 
     // !member -> So viele Member sind aufm Server von vAzoniq!
 
    command(client, 'member', (message) => {
        client.guilds.cache.forEach((guild) => {
          message.channel.send(
-             `${guild.name} hast a total of ${guild.memberCount} members`
+             `${guild.name} hat ${guild.memberCount} Member!`
          )
        })
    })
@@ -73,13 +109,15 @@ client.on('ready', () => {
             console.log(channel)
         })
     })
+
+  
     
     command(client, 'embad', (message) => {
         const logo = 
               'https://s18.directupload.net/images/210330/ta7643ol.png'
 
         const embed = new Discord.MessageEmbed()
-        .setTitle('```Update V.1.1```')
+        .setTitle('Update V.1.1')
         .setURL('https://docs.google.com/document/d/1JEgRshmmPRpjmBPYUuu9l395VmLSzX3opC8B0KX4vx8/edit?usp=sharing')
         .setAuthor(message.author.username)
         .setImage(logo)
@@ -95,44 +133,81 @@ client.on('ready', () => {
 
         const { name, region, owner, memberCount, channelCount , afkTimeout } = guild
         const icon = guild.iconURL()
+        const members = message.guild.members.cache
+        const logo = 
+                'https://s18.directupload.net/images/210330/ta7643ol.png'
 
         const embed = new Discord.MessageEmbed()
-        .setTitle(`Server info für "${name}"`)
+        .setTitle(`**Server Informationen**`)
         .setThumbnail(icon)
+        .setColor('RANDOM')
+        .setFooter (`Fresh diese`, logo)
         .addFields(
            {
-               name: 'Inhaber',
+              name: '🎫⠀Server Name',
+              value: message.guild.name
+           },
+           {
+               name: '👑⠀Inhaber',
                value: owner.user.tag,
            },
            {
-               name: 'Region',
+               name: '🌎⠀Region',
                value: region,
            },
            {
-               name: 'Members',
-               value: memberCount,
+               name: '👥⠀Member',
+               value: memberCount,  
            }, 
            {
-               name: 'AFK Timeout',
-               value: afkTimeout / 60,
+                name: '🤖⠀Bots ',
+                value: members.filter(member => member.user.bot).size,
            },
-           )
+           {
+                name: '👤⠀Menschen',
+                value: members.filter(member => !member.user.bot).size
+           },
+           {
+               name: '💬⠀Alle Text Kanäle ',
+               value: message.guild.channels.cache.filter(channel => channel.type === 'text').size,
+           },
+           {
+               name: '🎤⠀Alle Voice Kanäle', 
+               value: message.guild.channels.cache.filter(channel => channel.type === 'voice').size,
+           },
+           {
+               name: '👔⠀Anzahl der Rollen',
+               value: message.guild.roles.cache.size,
+           },
+           )   
 
         message.channel.send(embed)
         })
 
             command(client, 'help', (message) => {
-                message.channel.send(`
-Das sind all unsere commands:
-
-**!help** - Help Menü
-**!twitch** - Link zum Twitch Kanal von vAzoniq wird gepostet!
-**!insta** - Link zum Insta Account von vAzoniq wird gepostet!
-**!tiktok** - Link zum Tiktok Account von vAzoniq wird gepostet!
-**!gaming** - Link zu Instant-Gaming wird gepostet!
-**!key** - Link zu keydrop wird gepostet!
-                                     `)
+                const { guild } = message
+                const icon = guild.iconURL()
+                const logo = 
+              'https://s18.directupload.net/images/210330/ta7643ol.png'
+                const embed = new Discord.MessageEmbed()
+                .setTitle(`**Help Page**`)
+                .setThumbnail(icon)
+                .setColor(`ff0004`)
+                .setFooter('fresh', logo)
+                .addFields(
+                    {
+                        name: 'Command List:',
+                        value: `
+                        **!twitch** - Link zum Twitch Kanal von vAzoniq wird gepostet!
+                        **!insta** - Link zum Insta Account von vAzoniq wird gepostet!
+                        **!tiktok** - Link zum Tiktok Account von vAzoniq wird gepostet!
+                        **!gaming** - Link zu Instant-Gaming wird gepostet!
+                        **!key** - Link zu keydrop wird gepostet!`
+                    }
+                )
+                message.channel.send(embed)
                     })
+
                     const { prefix } = config
                 client.user.setPresence({
             activity: {
@@ -183,10 +258,10 @@ Das sind all unsere commands:
             }
         } else {
           message.channel.send(
-           `${tag} Du hast keine Rechte diesen Command auszuführen!`
-        )
-      }
-    })
+            `${tag} Du hast keine Rechte diesen Command auszuführen!`
+          )
+          }   
+    }) 
 })
 
 client.login(config.token)
