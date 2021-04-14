@@ -9,6 +9,9 @@ const commands = require('./commands')
 const warnFile = require('./warns.json')
 const membercount = require('./member-count')
 const antiAd = require('./anti-ad')
+const modLogs = require('./mod-logs')
+const scalingChannels1 = require('./scaling-channel1')
+const scalingChannels = require('./scaling-channels')
 const inviteNotifications = require('./invite-notifications')
 
 antiAd(client)
@@ -35,6 +38,9 @@ readCommands('commands')
 client.on('ready', () => {
     console.log('Ich bin Bereit!')
     membercount(client)
+    modLogs(client)
+    scalingChannels(client)
+    scalingChannels1(client)
 
 })
   client.on('ready', () => {
