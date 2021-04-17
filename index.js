@@ -9,10 +9,13 @@ const commands = require('./commands')
 const warnFile = require('./warns.json')
 const membercount = require('./member-count')
 const antiAd = require('./anti-ad')
-const modLogs = require('./mod-logs')
 const scalingChannels1 = require('./scaling-channel1')
 const scalingChannels = require('./scaling-channels')
 const inviteNotifications = require('./invite-notifications')
+const xpfile = require("./xp.json")
+const coinfile = require("./coins.json")
+const { countReset } = require('console')
+const { isRegExp } = require('util')
 
 antiAd(client)
 inviteNotifications(client)
@@ -38,7 +41,6 @@ readCommands('commands')
 client.on('ready', () => {
     console.log('Ich bin Bereit!')
     membercount(client)
-    modLogs(client)
     scalingChannels(client)
     scalingChannels1(client)
 
@@ -83,7 +85,7 @@ client.on('ready', () => {
      })
 
     // !member -> So viele Member sind aufm Server von vAzoniq!
-
+   
    command(client, 'member', (message) => {
        client.guilds.cache.forEach((guild) => {
          message.channel.send(
@@ -103,7 +105,7 @@ client.on('ready', () => {
            },
        })
    })
-   
+
    command(client, 'createtextchannel', (message) => {
        const name = message.content.replace('!createtextchannel', '')
 
@@ -196,19 +198,26 @@ client.on('ready', () => {
                 const logo = 
               'https://s18.directupload.net/images/210330/ta7643ol.png'
                 const embed = new Discord.MessageEmbed()
-                .setTitle(`**Help Page**`)
+                .setTitle(`**Command Hilfe**`)
                 .setThumbnail(icon)
                 .setColor(`ff0004`)
                 .setFooter('fresh', logo)
                 .addFields(
                     {
-                        name: 'Command List:',
+                        name: 'Social Media Commands:',
                         value: `
                         **!twitch** - Link zum Twitch Kanal von vAzoniq wird gepostet!
                         **!insta** - Link zum Insta Account von vAzoniq wird gepostet!
                         **!tiktok** - Link zum Tiktok Account von vAzoniq wird gepostet!
                         **!gaming** - Link zu Instant-Gaming wird gepostet!
                         **!key** - Link zu keydrop wird gepostet!`
+                    },
+                    {
+                        name: 'Glückspiel Commands:',
+                        value: `
+                        **!Coins** - Anzahl der Coins die du besitzt!
+                        **!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
+                        `
                     }
                 )
                 message.channel.send(embed)
@@ -265,9 +274,238 @@ client.on('ready', () => {
         } else {
           message.channel.send(
             `${tag} Du hast keine Rechte diesen Command auszuführen!`
-          )
-          }   
-    }) 
+          )}
+
+
+    })
+    client.on("message", async message =>{
+        if(!warnFile[message.author.id+message.guild.id]) {
+            warnFile[message.author.id+message.guild.id] = {
+                warns:0,
+                maxwarn: 3
+             }
+         }
+
+         fs.writeFile("./warns.json", JSON.stringify(warnFile), function(err){
+            if(err) console.log(err)
+            })
+        })
+    client.on("message", function(message){
+
+        if(message.author.bot) return;
+
+        if(!coinfile[message.author.id]){
+            coinfile[message.author.id] = {
+                coins: 100
+            }
+        }
+
+        fs.writeFile("./coins.json", JSON.stringify(coinfile), err =>{
+            if(err){
+                console.log(err);
+            }
+        })
+
+        var addXP = Math.floor(Math.random() * 8) + 3;
+
+        if(!xpfile[message.author.id]){
+            xpfile[message.author.id] = {
+                xp: 0,
+                level: 1,
+                reqxp: 50
+            }
+
+            fs.writeFile("./xp.json",JSON.stringify(xpfile),function(err){
+                if(err) console.log(err)
+            })
+        }
+
+        xpfile[message.author.id].xp += addXP
+
+        if(xpfile[message.author.id].xp > xpfile[message.author.id].reqxp){
+            xpfile[message.author.id].xp -= xpfile[message.author.id].reqxp // xp abziehen
+            xpfile[message.author.id].reqxp *= 1.25 //xp die man braucht erhöhern
+            xpfile[message.author.id].reqxp = Math.floor(xpfile[message.author.id].reqxp) // reqxp
+            xpfile[message.author.id].level += 1 // 1 Level hinzufügen
+
+            message.reply("Ist nun Level **"+xpfile[message.author.id].level+"**!")
+      }
+
+      fs.writeFile("./xp.json",JSON.stringify(xpfile),function(err){
+          if(err) console.log(err)
+      })
+
+      if(message.content.startsWith("!level")){
+          let user = message.mentions.users.first() || message.author
+
+          let embed = new Discord.MessageEmbed()
+          .setTitle("Level Karte")
+          .setColor("GREEN")
+          .addField("Level:",xpfile[user.id].level)
+          .addField("XP:", xpfile[user.id].xp+"/"+xpfile[user.id].reqxp)
+          .addField("Xp bis zum nächsten Level: ", xpfile[user.id].reqxp)
+          message.channel.send(embed)
+        }
+
+        if(message.content.startsWith("!warn")){
+            let user = message.mentions.users.first()  
+            let grund = message.content.split(" ").slice(2).join(" ");
+ 
+            if(!user) return message.channel.send("Du hast vergessen jemanden zu erwähnen!")
+ 
+            if(!grund) grund = "Kein genannter Grund!"
+ 
+            let embed = new Discord.MessageEmbed()
+            .setTitle("Warnung!")
+            .setDescription(`Warnung <@!${user.id}>, du wurdest verwarnt!\nGrund: ${grund}`)
+            .setColor("RED")
+ 
+            message.channel.send(embed)
+ 
+            if(!warnFile[user.id+message.guild.id]){
+                warnFile[user.id+message.guild.id] = {
+                    warns:0,
+                    maxwarn:3,
+                }
+            }
+ 
+            warnFile[user.id+message.guild.id].warns += 1
+ 
+            if(warnFile[user.id+message.guild.id].warns > warnFile[user.id+message.guild.id].maxwarns){
+                if(message.guild.member(user).kickable == true){
+                    message.channel.send(`<@!${user.id}> wurde wegen zu vielen Verstößen gekickt!`)
+                    message.guild.member(user).kick("Zu viele verwarnungen!")
+                }
+               delete warnFile[user.id+message.guild.id]
+             }
+             
+ 
+             fs.writeFile("./warns.json", JSON.stringify(warnFile), function(err){
+                 if(err) console.log(err)
+             })
+        }
+
+        if(message.content === "!clear"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(100);
+            message.channel.send("Ich habe die letzten 100 Nachrichten gelöscht!")
+        }
+
+        if(message.content === "!clear 10"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(10);
+            message.channel.send("Ich habe die letzten 10 Nachrichten gelöscht!")
+        }
+
+        if(message.content === "!clear 50"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(50);
+            message.channel.send("Ich habe die letzten 50 Nachrichten gelöscht!")
+        }
+
+        if(message.content === "!allclear"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(1000);
+            message.channel.send("Ich habe alle Nachrichten aus diesem Channel gelöscht!")
+        }
+
+
+        if(message.content.startsWith("!flip")){
+
+            if(!coinfile[message.author.id]){
+                coinfile[message.author.id] = {
+                    coins: 100
+                }
+            }
+
+            let bounty = message.content.split(" ").slice(1, 2).join("");
+
+            let val = message.content.split(" ").slice(2, 3).join("");
+
+            Number(bounty) // optional
+
+            if(isNaN(bounty)) return message.reply("Du hast keine Zahl für die Coins angegeben!")
+
+            if(!bounty) return message.reply("Du hast keine Coins angegeben!")
+
+            if(!val) return message.reply("Du hast kein Kopf oder Zahl angegeben!")
+
+            if(coinfile[message.author.id].coins < bounty) return message.reply("Du hast zu wenige Coins!")
+
+            coinfile[message.author.id].coins -= bounty
+
+            let chance = Math.floor(Math.random() * 2);
+
+            if(chance == 0) {
+                if(val.toLocaleLowerCase() == "kopf"){
+                    message.reply("Und es ist... **Kopf**! Dein Einsatz verdoppelt sich!")
+
+                    bounty = bounty *2
+
+                    coinfile[message.author.id].coins += bounty;
+                }else{
+
+                    if(val.toLocaleLowerCase() == "zahl"){
+                        message.reply("Und es ist... **Kopf**! Du hast verloren!")
+                    }else{
+                        coinfile[message.author.id].coins += bounty
+                        message.reply("Du hast **Kopf** oder **Zahl** falsch geschrieben oder an die falsche stelle gesetzt! ");
+                    }
+                }
+            }else{
+
+                if(val.toLocaleLowerCase() == "zahl"){
+                    message.reply("Und es ist... **Zahl**! Dein Einsatz verdoppelt sich!")
+
+                    bounty = bounty *2
+
+                    coinfile[message.author.id].coins += bounty;
+                }else{
+
+                    if(val.toLocaleLowerCase() == "kopf"){
+                        message.reply("Und es ist... **Zahl**! Du hast verloren!")
+                    }else{
+                        coinfile[message.author.id].coins += bounty
+                        message.reply("Du hast **Kopf** oder **Zahl** falsch geschrieben oder an die falsche stelle gesetzt! ");
+                    }
+                }
+
+            }
+
+            fs.writeFile("./coins.json", JSON.stringify(coinfile), err =>{
+                if(err){
+                    console.log(err);
+                }
+            })
+
+        }
+         
+        if(message.content === "!coins"){
+            let embed = new Discord.MessageEmbed()
+            .setTitle("Coins von " + message.author.username)
+            .setDescription("Deine Coins: " + coinfile[message.author.id].coins)
+            .setColor("YELLOW")
+
+            message.channel.send(embed);
+        }
+    })
 })
 
 client.login(config.token)
+
