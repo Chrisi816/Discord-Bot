@@ -17,6 +17,8 @@ const coinfile = require("./coins.json")
 const { countReset } = require('console')
 const { isRegExp } = require('util')
 
+const ranks = ["Test",0,"Premium",100,"VIP",5000, "list"];
+
 antiAd(client)
 inviteNotifications(client)
 
@@ -274,7 +276,8 @@ client.on('ready', () => {
         } else {
           message.channel.send(
             `${tag} Du hast keine Rechte diesen Command auszuführen!`
-          )}
+        )
+        }
 
 
     })
@@ -290,6 +293,7 @@ client.on('ready', () => {
             if(err) console.log(err)
             })
         })
+
     client.on("message", function(message){
 
         if(message.author.bot) return;
@@ -486,13 +490,14 @@ client.on('ready', () => {
                     }
                 }
 
-            }
+                
 
             fs.writeFile("./coins.json", JSON.stringify(coinfile), err =>{
                 if(err){
                     console.log(err);
                 }
             })
+            }
 
         }
          
@@ -503,6 +508,91 @@ client.on('ready', () => {
             .setColor("YELLOW")
 
             message.channel.send(embed);
+        }
+
+        
+        if(message.content.startsWith("!buyrank")){
+            let rank;
+            let mrank = message.content.split(" ").slice(1).join(" ");
+            if(!mrank) return message.reply("Du hast keinen Rang zum kaufen angegeben!");
+
+            for(var i=0;i<ranks.length;i++){
+                if(isNaN(ranks[i])){
+                    if(mrank.toLowerCase() == ranks[i].toLowerCase()){
+                        rank = ranks[i];
+                        break; 
+                    }
+                }
+            }
+
+            if(!rank){
+                return message.reply("Dieser Rang existiert nicht! Bekomme eine Lister aller Ränge mit dem Command !buyrank list");
+            }else{
+
+                for(var i=0;i<ranks[i].length;i++){
+                    if(isNaN(ranks[i]) && ranks[i] !== "list"){
+                        if(rank == ranks[i]){
+                            if(coinfile[message.author.id].coins < ranks[i+1]){
+                                message.reply("Du hast zu wenig Geld um diesen Rang zu kaufen!");
+                                return;
+                            }
+
+                            let name = message.member.nickname || message.author.username
+
+                            if(name.includes(ranks[i].toUpperCase())){
+                                message.reply("Du hast diesen Rang bereits!")
+                                return;
+                            }
+
+                            coinfile[message.author.id].coins -= ranks[i+1];
+
+                            let coins = ranks[i+1];
+                             
+                            //Mit Rolle
+
+                            let role = message.guild.roles.cache.find(rl=>rl.name===ranks[i])
+
+                            if(role){
+
+                                message.member.roles.add(role).catch
+                            }
+                             //mit Nickname
+
+                              message.member.setNickname(` [${ranks[i].toUpperCase()}] ${name}`).then(()=>{
+                                 message.channel.send(`Erfolgreich den rang ${ranks[i]} gekauft!`);
+                            }).catch(err=>{
+                                if(err){
+                                   message.channel.send("Konnte den Rang nicht hinzufügen: "+err)
+                                   coinfile[message.author.id].coins += coins;
+                                   return;
+                                }
+                            })
+                            
+                        }  
+                    }
+                }
+
+                if(rank == "list"){
+                    let list = "";
+
+                    for(var i=0;i<ranks.length;i++){
+                        if(isNaN(ranks[i]) && ranks[i] !== "list"){
+                            list+= `-${ranks[i]} - ${ranks[i+1]}\n\n`
+                        }
+                    }
+
+                    let embed = new Discord.MessageEmbed()
+                    .setTitle("Liste mit Rängen")
+                    .setColor("BLACK")
+                    .setDescription("Hier ist eine Liste mit allen Rängen: \n\n"+list)
+
+                    message.channel.send(embed)
+                }
+            }
+
+            fs.writeFile("./coins.json",JSON.stringify(coinfile),function(err){
+                if(err) console.log(err)
+            })
         }
     })
 })
