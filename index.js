@@ -443,7 +443,7 @@ client.on('ready', () => {
 
             let val = message.content.split(" ").slice(2, 3).join("");
 
-            Number(bounty) // optional
+            bounty = Number(bounty) 
 
             if(isNaN(bounty)) return message.reply("Du hast keine Zahl für die Coins angegeben!")
 
@@ -455,6 +455,8 @@ client.on('ready', () => {
 
             coinfile[message.author.id].coins -= bounty
 
+            coinfile[message.author.id].coins = Number(coinfile[message.author.id].coins)
+
             let chance = Math.floor(Math.random() * 2);
 
             if(chance == 0) {
@@ -464,12 +466,17 @@ client.on('ready', () => {
                     bounty = bounty *2
 
                     coinfile[message.author.id].coins += bounty;
+
+                    coinfile[message.author.id].coins = Number(coinfile[message.author.id].coins)
                 }else{
 
                     if(val.toLocaleLowerCase() == "zahl"){
                         message.reply("Und es ist... **Kopf**! Du hast verloren!")
                     }else{
                         coinfile[message.author.id].coins += bounty
+
+                        coinfile[message.author.id].coins = Number(coinfile[message.author.id].coins)
+
                         message.reply("Du hast **Kopf** oder **Zahl** falsch geschrieben oder an die falsche stelle gesetzt! ");
                     }
                 }
@@ -481,12 +488,17 @@ client.on('ready', () => {
                     bounty = bounty *2
 
                     coinfile[message.author.id].coins += bounty;
+
+                    coinfile[message.author.id].coins = Number(coinfile[message.author.id].coins)
                 }else{
 
                     if(val.toLocaleLowerCase() == "kopf"){
                         message.reply("Und es ist... **Zahl**! Du hast verloren!")
                     }else{
                         coinfile[message.author.id].coins += bounty
+
+                        coinfile[message.author.id].coins = Number(coinfile[message.author.id].coins)
+
                         message.reply("Du hast **Kopf** oder **Zahl** falsch geschrieben oder an die falsche stelle gesetzt! ");
                     }
                 }
