@@ -17,7 +17,7 @@ const coinfile = require("./coins.json")
 const { countReset } = require('console')
 const { isRegExp } = require('util')
 
-const ranks = ["Test",0,"Premium",100,"VIP",5000, "list"];
+const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
 
 antiAd(client)
 inviteNotifications(client)
@@ -219,7 +219,7 @@ client.on('ready', () => {
                         value: `
                         **!Coins** - Anzahl der Coins die du besitzt!
                         **!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
-                        `
+                        **!buyrank** - Du kannst dir für die coins Ränge kaufen!`
                     }
                 )
                 message.channel.send(embed)
@@ -348,6 +348,7 @@ client.on('ready', () => {
           .addField("Level:",xpfile[user.id].level)
           .addField("XP:", xpfile[user.id].xp+"/"+xpfile[user.id].reqxp)
           .addField("Xp bis zum nächsten Level: ", xpfile[user.id].reqxp)
+          
           message.channel.send(embed)
         }
 
@@ -389,7 +390,7 @@ client.on('ready', () => {
              })
         }
 
-        if(message.content === "!clear"){
+        if(message.content === "!clear 100"){
             message.delete();
             if(!message.member.hasPermission("MANAGE_MESSAGES")){
                 message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
@@ -425,7 +426,7 @@ client.on('ready', () => {
                 message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
                 return;
             }
-            message.channel.bulkDelete(1000);
+            message.channel.bulkDelete(10000);
             message.channel.send("Ich habe alle Nachrichten aus diesem Channel gelöscht!")
         }
 
@@ -529,7 +530,7 @@ client.on('ready', () => {
                 return message.reply("Dieser Rang existiert nicht! Bekomme eine Lister aller Ränge mit dem Command !buyrank list");
             }else{
 
-                for(var i=0;i<ranks[i].length;i++){
+                for(var i=0;i<ranks.length;i++){
                     if(isNaN(ranks[i]) && ranks[i] !== "list"){
                         if(rank == ranks[i]){
                             if(coinfile[message.author.id].coins < ranks[i+1]){
@@ -557,9 +558,14 @@ client.on('ready', () => {
                                 message.member.roles.add(role).catch
                             }
                              //mit Nickname
+                             
+                              if(message.member.nickname){
+                                  message.member.setNickname(" ");
+                                  name = message.author.username;
+                              } 
 
                               message.member.setNickname(` [${ranks[i].toUpperCase()}] ${name}`).then(()=>{
-                                 message.channel.send(`Erfolgreich den rang ${ranks[i]} gekauft!`);
+                                 message.channel.send(`Erfolgreich den rang ${rank} gekauft!`);
                             }).catch(err=>{
                                 if(err){
                                    message.channel.send("Konnte den Rang nicht hinzufügen: "+err)
@@ -584,7 +590,7 @@ client.on('ready', () => {
                     let embed = new Discord.MessageEmbed()
                     .setTitle("Liste mit Rängen")
                     .setColor("BLACK")
-                    .setDescription("Hier ist eine Liste mit allen Rängen: \n\n"+list)
+                    .setDescription("Hier ist eine Liste mit allen Rängen und Preisen: \n\n"+list)
 
                     message.channel.send(embed)
                 }
