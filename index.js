@@ -77,6 +77,7 @@ client.on('ready', () => {
         message.channel.send('Mit diesem Link kommst du zum Besten Youtuber auf Yt! ;) https://www.youtube.com/channel/UCqoQRnEXO1GaJMTSTFzpFBQ ')
  
      })
+     
      command(client, 'ehre', (message) => {
         message.channel.send(' kekw')
         var json = {
@@ -611,8 +612,19 @@ client.on('ready', () => {
             fs.writeFile("./coins.json",JSON.stringify(coinfile),function(err){
                 if(err) console.log(err)
             })
+           
         }
+
     })
+    client.on("guildMemberAdd", function(member){
+
+        const tag = `<@${member.id}>`
+
+        let channel = member.guild.channels.cache.find(ch => ch.name === "╔═丨✌𝕎𝕚𝕝𝕝𝕜𝕠𝕞𝕞𝕖𝕟✌");
+        channel.send( `Hey ${tag} !\nWilkommen auf dem Comunity Discord von vAzoniq!`);
+    })
+    
+
 })
 
 client.login(config.token)
