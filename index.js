@@ -19,6 +19,7 @@ const { isRegExp } = require('util')
 
 const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
 
+
 antiAd(client)
 inviteNotifications(client)
 
@@ -623,6 +624,8 @@ client.on('ready', () => {
         let channel = member.guild.channels.cache.find(ch => ch.name === "╔═丨✌𝕎𝕚𝕝𝕝𝕜𝕠𝕞𝕞𝕖𝕟✌");
         channel.send( `Hey ${tag} !\nWilkommen auf dem Comunity Discord von vAzoniq!`);
     })
+
+   
     
 
 })
