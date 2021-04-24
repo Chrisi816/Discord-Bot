@@ -41,13 +41,15 @@ const readCommands = (dir) => {
 
 readCommands('commands')
 
-client.on('ready', () => {
+client.on('ready', async () => {
     console.log('Ich bin Bereit!')
     membercount(client)
     scalingChannels(client)
     scalingChannels1(client)
 
+
 })
+
   client.on('ready', () => {
 
    command(client, 'twitch', (message) => {
@@ -91,11 +93,9 @@ client.on('ready', () => {
     // !member -> So viele Member sind aufm Server von vAzoniq!
    
    command(client, 'member', (message) => {
-       client.guilds.cache.forEach((guild) => {
          message.channel.send(
-             `${guild.name} hat ${guild.memberCount} Member!`
+             `${message.guild.name} hat ${message.guild.memberCount} Member!`
          )
-       })
    })
 
    command(client, 'status', (message) => {
@@ -622,7 +622,7 @@ client.on('ready', () => {
         const tag = `<@${member.id}>`
 
         let channel = member.guild.channels.cache.find(ch => ch.name === "╔═丨✌𝕎𝕚𝕝𝕝𝕜𝕠𝕞𝕞𝕖𝕟✌");
-        channel.send( `Hey ${tag} !\nWilkommen auf dem Comunity Discord von vAzoniq!`);
+        channel.send( `Hey ${tag} !\nWillkommen auf dem Community Discord von vAzoniq!`);
     })
 
    
