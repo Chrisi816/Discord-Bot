@@ -4,6 +4,7 @@ const Discord = require ('discord.js')
 const client = new Discord.Client({partials: ['MESSAGE', 'CHANNEL', 'REACTION']})
 
 const config = require('./config.json')
+const mongo = require('./mongo')
 const command = require('./commands')
 const commands = require('./commands')
 const warnFile = require('./warns.json')
@@ -16,6 +17,8 @@ const xpfile = require("./xp.json")
 const coinfile = require("./coins.json")
 const { countReset } = require('console')
 const { isRegExp } = require('util')
+const { Mongoose } = require('mongoose')
+const welcome = require('./welcome')
 
 const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
 
@@ -46,8 +49,15 @@ client.on('ready', async () => {
     membercount(client)
     scalingChannels(client)
     scalingChannels1(client)
+    welcome(client)
 
-
+    await mongo().then(mongoose => {
+        try {
+          console.log('Connected to Mongo!')
+        } finally {
+         mongoose.connection.close()
+        }
+    })
 })
 
   client.on('ready', () => {
@@ -79,15 +89,6 @@ client.on('ready', async () => {
      command(client, 'maushaus', (message) => {
         message.channel.send('Mit diesem Link kommst du zum Besten Youtuber auf Yt! ;) https://www.youtube.com/channel/UCqoQRnEXO1GaJMTSTFzpFBQ ')
  
-     })
-     
-     command(client, 'ehre', (message) => {
-        message.channel.send(' kekw')
-        var json = {
-            random: Math.ceil(Math.random() * 10000)
-          }
-          
-          console.log(json);
      })
 
     // !member -> So viele Member sind aufm Server von vAzoniq!
@@ -146,14 +147,13 @@ client.on('ready', async () => {
         const { name, region, owner, memberCount, channelCount , afkTimeout } = guild
         const icon = guild.iconURL()
         const members = message.guild.members.cache
-        const logo = 
-                'https://s18.directupload.net/images/210330/ta7643ol.png'
+       
 
         const embed = new Discord.MessageEmbed()
         .setTitle(`**Server Informationen**`)
         .setThumbnail(icon)
         .setColor('RANDOM')
-        .setFooter (`Fresh diese`, logo)
+        .setFooter (`Fresh diese`, icon)
         .addFields(
            {
               name: '🎫⠀Server Name',
@@ -232,6 +232,7 @@ client.on('ready', async () => {
             activity: {
             name: `${prefix}help for help (Developed by Chrisi)`
         },
+        
     }) 
     
     command(client, 'ban', (message) => {
@@ -279,6 +280,35 @@ client.on('ready', async () => {
           message.channel.send(
             `${tag} Du hast keine Rechte diesen Command auszuführen!`
         )
+        }
+        if(message.content === "!clear 100"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(100);
+            message.channel.send("Ich habe die letzten 100 Nachrichten gelöscht!")
+        }
+
+        if(message.content === "!clear 10"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(10);
+            message.channel.send("Ich habe die letzten 10 Nachrichten gelöscht!")
+        }
+
+        if(message.content === "!clear 50"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(50);
+            message.channel.send("Ich habe die letzten 50 Nachrichten gelöscht!")
         }
 
 
@@ -356,7 +386,7 @@ client.on('ready', async () => {
 
         if(message.content.startsWith("!warn")){
             let user = message.mentions.users.first()  
-            let grund = message.content.split(" ").slice(2).join(" ");
+            let grund = message.content.split(" ").slice(2).join 
  
             if(!user) return message.channel.send("Du hast vergessen jemanden zu erwähnen!")
  
@@ -392,43 +422,13 @@ client.on('ready', async () => {
              })
         }
 
-        if(message.content === "!clear 100"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(100);
-            message.channel.send("Ich habe die letzten 100 Nachrichten gelöscht!")
-        }
-
-        if(message.content === "!clear 10"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(10);
-            message.channel.send("Ich habe die letzten 10 Nachrichten gelöscht!")
-        }
-
-        if(message.content === "!clear 50"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(50);
-            message.channel.send("Ich habe die letzten 50 Nachrichten gelöscht!")
-        }
-
         if(message.content === "!allclear"){
             message.delete();
             if(!message.member.hasPermission("MANAGE_MESSAGES")){
                 message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
                 return;
             }
-            message.channel.bulkDelete(10000);
+            message.channel.bulkDelete(1000);
             message.channel.send("Ich habe alle Nachrichten aus diesem Channel gelöscht!")
         }
 
@@ -616,17 +616,7 @@ client.on('ready', async () => {
            
         }
 
-    })
-    client.on("guildMemberAdd", function(member){
-
-        const tag = `<@${member.id}>`
-
-        let channel = member.guild.channels.cache.find(ch => ch.name === "╔═丨✌𝕎𝕚𝕝𝕝𝕜𝕠𝕞𝕞𝕖𝕟✌");
-        channel.send( `Hey ${tag} !\nWillkommen auf dem Community Discord von vAzoniq!`);
-    })
-
-   
-    
+    })  
 
 })
 
