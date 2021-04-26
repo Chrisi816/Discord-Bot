@@ -44,6 +44,7 @@ const readCommands = (dir) => {
 
 readCommands('commands')
 
+
 client.on('ready', async () => {
     console.log('Ich bin Bereit!')
     membercount(client)
@@ -104,6 +105,11 @@ client.on('ready', async () => {
 
      command(client, 'link', (message) => {
         message.channel.send('Einladungslink vom Bot: https://cutt.ly/rv7V5L1 ')
+
+    })
+     command(client, 'ehre', (message) => {
+        const zahl = Math.floor(Math.random() * 2)
+         message.channel.send(`Du hast ${zahl} Ehre`)
 
     })
 
@@ -193,7 +199,7 @@ client.on('ready', async () => {
                 .setFooter('fresh', icon)
                 .addFields(
                     {
-                        name: 'Allgemeine Commands!',
+                        name: 'Allgemeine Commands:',
                         value: `
                         **!serverinfo** - Alle Informationen vom Server werden gepostet!
                         **!link** - Der Einladungslink vom Bot wird veröffentlicht!
