@@ -51,6 +51,17 @@ client.on('ready', async () => {
     scalingChannels1(client)
     welcome(client)
 
+    let statuse = [
+    `auf ${client.guilds.cache.size} Servern`,
+    `mit ${client.users.cache.size} Usern`,
+    '!link um zum Einladungslink zu kommen']
+
+    setInterval(() => {
+        let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
+
+        client.user.setActivity(rstatus);
+    },4000)
+
     await mongo().then(mongoose => {
         try {
           console.log('Connected to Mongo!')
@@ -75,7 +86,7 @@ client.on('ready', async () => {
     command(client, 'key', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zu Keydrop, dort kannst du für geringes Geld CSGO Kisten aufmachen, diese Lohnen sich mehr über die Website zu kaufen als im eigendlichen Spiel! https://key-drop.com/?code=RXSQJ0EH (Dies ist ein Affiliate Link)')
  
-     })
+    })
  
     command(client, 'insta', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zum Insta Account von vAzoniq! https://www.instagram.com/twitch.vazoniq7882/')
@@ -84,12 +95,18 @@ client.on('ready', async () => {
 
      command(client, 'tiktok', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zum Tiktok Account von vAzoniq! https://www.tiktok.com/@twitch.vazoniq7882?lang=de-DE')
-     })
+    })
 
      command(client, 'maushaus', (message) => {
         message.channel.send('Mit diesem Link kommst du zum Besten Youtuber auf Yt! ;) https://www.youtube.com/channel/UCqoQRnEXO1GaJMTSTFzpFBQ ')
  
-     })
+    })
+
+     command(client, 'link', (message) => {
+        message.channel.send('Hier ist der Einladungslink vom Bot! https://cutt.ly/rv7V5L1 ')
+
+    })
+
 
     // !member -> So viele Member sind aufm Server von vAzoniq!
    
@@ -225,14 +242,6 @@ client.on('ready', async () => {
                     }
                 )
                 message.channel.send(embed)
-                    })
-
-                    const { prefix } = config
-                client.user.setPresence({
-            activity: {
-            name: `${prefix}help for help (Developed by Chrisi)`
-        },
-        
     }) 
     
     command(client, 'ban', (message) => {
@@ -281,35 +290,7 @@ client.on('ready', async () => {
             `${tag} Du hast keine Rechte diesen Command auszuführen!`
         )
         }
-        if(message.content === "!clear 100"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(100);
-            message.channel.send("Ich habe die letzten 100 Nachrichten gelöscht!")
-        }
-
-        if(message.content === "!clear 10"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(10);
-            message.channel.send("Ich habe die letzten 10 Nachrichten gelöscht!")
-        }
-
-        if(message.content === "!clear 50"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(50);
-            message.channel.send("Ich habe die letzten 50 Nachrichten gelöscht!")
-        }
+        
 
 
     })
@@ -421,17 +402,35 @@ client.on('ready', async () => {
                  if(err) console.log(err)
              })
         }
-
-        if(message.content === "!allclear"){
+        if(message.content === "!clear 100"){
             message.delete();
             if(!message.member.hasPermission("MANAGE_MESSAGES")){
                 message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
                 return;
             }
-            message.channel.bulkDelete(1000);
-            message.channel.send("Ich habe alle Nachrichten aus diesem Channel gelöscht!")
+            message.channel.bulkDelete(100);
+            message.channel.send("Ich habe die letzten 100 Nachrichten gelöscht!")
         }
 
+        if(message.content === "!clear 10"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(10);
+            message.channel.send("Ich habe die letzten 10 Nachrichten gelöscht!")
+        }
+
+        if(message.content === "!clear 50"){
+            message.delete();
+            if(!message.member.hasPermission("MANAGE_MESSAGES")){
+                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
+                return;
+            }
+            message.channel.bulkDelete(50);
+            message.channel.send("Ich habe die letzten 50 Nachrichten gelöscht!")
+        }
 
         if(message.content.startsWith("!flip")){
 
@@ -513,6 +512,7 @@ client.on('ready', async () => {
                 }
             })
             }
+            
 
         }
          
@@ -613,11 +613,18 @@ client.on('ready', async () => {
             fs.writeFile("./coins.json",JSON.stringify(coinfile),function(err){
                 if(err) console.log(err)
             })
-           
+            
+            client.on("guildMemberAdd", function(member){
+
+                const tag = `<@${member.id}>`
+        
+                let channel = member.guild.channels.cache.find(ch => ch.name === "╔═丨✌𝕎𝕚𝕝𝕝𝕜𝕠𝕞𝕞𝕖𝕟✌");
+                channel.send( `Hey ${tag} !\nWillkommen auf dem Community Discord von vAzoniq!`);
+            })
         }
 
-    })  
-
+    })
+    
 })
 
 client.login(config.token)
