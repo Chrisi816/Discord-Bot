@@ -54,7 +54,7 @@ client.on('ready', async () => {
     let statuse = [
     `auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    '!link um zum Einladungslink zu kommen']
+    '!link für den Einladungslink ']
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
