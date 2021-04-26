@@ -54,7 +54,7 @@ client.on('ready', async () => {
     let statuse = [
     `auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    '!link für den Einladungslink ']
+    '!link um zum Einladungslink zu kommen']
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
@@ -116,18 +116,6 @@ client.on('ready', async () => {
          )
    })
 
-   command(client, 'status', (message) => {
-       const content = message.content.replace('!status ', '')
-       // "!status hello world" -> "hello world"
-
-       client.user.setPresence({
-           activity: {
-               name: content,
-               type: 0,
-           },
-       })
-   })
-
    command(client, 'createtextchannel', (message) => {
        const name = message.content.replace('!createtextchannel', '')
 
@@ -138,24 +126,6 @@ client.on('ready', async () => {
         .then((channel) => {
             console.log(channel)
         })
-    })
-
-  
-    
-    command(client, 'embad', (message) => {
-        const logo = 
-              'https://s18.directupload.net/images/210330/ta7643ol.png'
-
-        const embed = new Discord.MessageEmbed()
-        .setTitle('Update V.1.1')
-        .setURL('https://docs.google.com/document/d/1JEgRshmmPRpjmBPYUuu9l395VmLSzX3opC8B0KX4vx8/edit?usp=sharing')
-        .setAuthor(message.author.username)
-        .setImage(logo)
-        .setThumbnail(logo)
-        .setFooter('Fresh', logo) 
-        .setColor('00AAFF')
-
-        message.channel.send(embed)
     })
 
     command(client, 'serverinfo', (message) => {
@@ -503,17 +473,12 @@ client.on('ready', async () => {
                         message.reply("Du hast **Kopf** oder **Zahl** falsch geschrieben oder an die falsche stelle gesetzt! ");
                     }
                 }
-
-                
-
             fs.writeFile("./coins.json", JSON.stringify(coinfile), err =>{
                 if(err){
                     console.log(err);
                 }
             })
             }
-            
-
         }
          
         if(message.content === "!coins"){
@@ -525,7 +490,6 @@ client.on('ready', async () => {
             message.channel.send(embed);
         }
 
-        
         if(message.content.startsWith("!buyrank")){
             let rank;
             let mrank = message.content.split(" ").slice(1).join(" ");
@@ -626,6 +590,4 @@ client.on('ready', async () => {
     })
     
 })
-
 client.login(config.token)
-
