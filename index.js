@@ -186,14 +186,20 @@ client.on('ready', async () => {
             command(client, 'help', (message) => {
                 const { guild } = message
                 const icon = guild.iconURL()
-                const logo = 
-              'https://s18.directupload.net/images/210330/ta7643ol.png'
                 const embed = new Discord.MessageEmbed()
                 .setTitle(`**Command Hilfe**`)
                 .setThumbnail(icon)
                 .setColor(`ff0004`)
-                .setFooter('fresh', logo)
+                .setFooter('fresh', icon)
                 .addFields(
+                    {
+                        name: 'Allgemeine Commands!',
+                        value: `
+                        **!serverinfo** - Alle Informationen vom Server werden gepostet!
+                        **!link** - Der Einladungslink vom Bot wird veröffentlicht!
+                        **!member** - Anzahl der Aktuellen Member! 
+                        **!level** - Sehe dein aktuelles Level an!` 
+                    },
                     {
                         name: 'Social Media Commands:',
                         value: `
@@ -208,7 +214,8 @@ client.on('ready', async () => {
                         value: `
                         **!Coins** - Anzahl der Coins die du besitzt!
                         **!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
-                        **!buyrank** - Du kannst dir für die coins Ränge kaufen!`
+                        **!buyrank** - Du kannst dir für die Coins Ränge kaufen!
+                        `
                     }
                 )
                 message.channel.send(embed)
@@ -586,8 +593,35 @@ client.on('ready', async () => {
                 channel.send( `Hey ${tag} !\nWillkommen auf dem Community Discord von vAzoniq!`);
             })
         }
+    }) 
+      command(client, 'Admin', (message) => {
+        
+        const { guild } = message
+        const icon = guild.iconURL()
+        const embed = new Discord.MessageEmbed()
 
+        .setTitle(`**Admin-Command Hilfe**`)
+        .setThumbnail(icon)
+        .setColor(`ff0004`)
+        .setFooter('fresh', icon)
+        .addFields(
+            {
+                name: '**Moderation Commands**',
+                value: `
+                **!ban** <@name> - Bannt den ausgewählten Nutzer! 
+                **!kick** <@name> - Kickt den ausgewählten Nutzer!
+                **!warn** <@name> - Warnt den ausgewählten Nutzer, dieser wird nach dem 3ten Warn gekickt!
+                **!clear** 10,50,100 - Cleart die Letzten 10/50/100 Nachrichten!`
+            },
+            {
+                name: '**Allgemeine Admin Commands**',
+                value: `
+                **!createwelcomechannel** <Nachricht> - Eim Welcomechannel wird festgellegt + Nachricht was beim beitreten stehen soll!
+                **!createtextchannel** - Erstelle ganz einfach einen Text Channel!
+                `
+            }
+        )
+        message.channel.send(embed)
     })
-    
 })
 client.login(config.token)
