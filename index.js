@@ -198,7 +198,7 @@ client.on('ready', async () => {
                         **!serverinfo** - Alle Informationen vom Server werden gepostet!
                         **!link** - Der Einladungslink vom Bot wird veröffentlicht!
                         **!member** - Anzahl der Aktuellen Member! 
-                        **!level** - Sehe dein aktuelles Level an!` 
+                        **!level** - Sehe dein aktuelles Level!` 
                     },
                     {
                         name: 'Social Media Commands:',
