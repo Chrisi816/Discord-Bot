@@ -616,7 +616,7 @@ client.on('ready', async () => {
             {
                 name: '**Allgemeine Admin Commands**',
                 value: `
-                **!createwelcomechannel** <Nachricht> - Eim Welcomechannel wird festgellegt + Nachricht was beim beitreten stehen soll!
+                **!createwelcomechannel** <Nachricht> - Ein Welcomechannel wird festgellegt + Nachricht was beim beitreten stehen soll!
                 **!createtextchannel** - Erstelle ganz einfach einen Text Channel!
                 `
             }
