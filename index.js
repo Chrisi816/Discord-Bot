@@ -103,7 +103,7 @@ client.on('ready', async () => {
     })
 
      command(client, 'link', (message) => {
-        message.channel.send('Hier ist der Einladungslink vom Bot! https://cutt.ly/rv7V5L1 ')
+        message.channel.send('Einladungslink vom Bot: https://cutt.ly/rv7V5L1 ')
 
     })
 
