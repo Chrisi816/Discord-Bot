@@ -53,7 +53,7 @@ client.on('ready', async () => {
     welcome(client)
 
     let statuse = [
-    `auf ${client.guilds.cache.size} Servern`,
+    `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
     `!link um zum Einladungslink zu kommen`,
     `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686`]
