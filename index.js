@@ -208,15 +208,6 @@ client.on('ready', async () => {
                         **!level** - Sehe dein aktuelles Level!` 
                     },
                     {
-                        name: 'Social Media Commands:',
-                        value: `
-                        **!twitch** - Link zum Twitch Kanal von vAzoniq wird gepostet!
-                        **!insta** - Link zum Insta Account von vAzoniq wird gepostet!
-                        **!tiktok** - Link zum Tiktok Account von vAzoniq wird gepostet!
-                        **!gaming** - Link zu Instant-Gaming wird gepostet!
-                        **!key** - Link zu keydrop wird gepostet!`
-                    },
-                    {
                         name: 'Glückspiel Commands:',
                         value: `
                         **!Coins** - Anzahl der Coins die du besitzt!
