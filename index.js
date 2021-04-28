@@ -230,8 +230,7 @@ client.on('ready', async () => {
                     {
                         name: `Fun Commands`,
                         value: `**!suggestion/vorschlag** - Erstelle ein Vorschlag! (**!** Umfrage Channel muss vorhanden sein **!**)
-                               **/status** - Die Server Informationen vom vAzoniq Smp werden gepostet!
-                               **!ip** - Die Ip vom Smp Server wird veröffentlicht!  ` 
+                                
                     }
                 )
                 message.channel.send(embed)
