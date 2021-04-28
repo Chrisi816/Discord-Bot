@@ -73,31 +73,31 @@ client.on('ready', async () => {
 })
     client.on('ready', () => {
 
-   command(client, 'twitch', (message) => {
+   command(client, 'vAzoniq twitch', (message) => {
        message.channel.send('Über diesen Link kommst du ganz einfach zum Twitch Kanal von vAzoniq! https://www.twitch.tv/vazoniq7882')
 
     })
 
-    command(client, 'gaming', (message) => {
+    command(client, 'vAzoniq gaming', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zu Instant Gaming, dort kannst du ganz billig Spiele kaufen! https://www.instant-gaming.com/?igr=vAzoniq-7882 (Dies ist ein Affiliate Link)')
  
      })
 
-    command(client, 'key', (message) => {
+    command(client, 'vAzoniq key', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zu Keydrop, dort kannst du für geringes Geld CSGO Kisten aufmachen, diese Lohnen sich mehr über die Website zu kaufen als im eigendlichen Spiel! https://key-drop.com/?code=RXSQJ0EH (Dies ist ein Affiliate Link)')
  
     })
  
-    command(client, 'insta', (message) => {
+    command(client, 'vAzoniq insta', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zum Insta Account von vAzoniq! https://www.instagram.com/twitch.vazoniq7882/')
  
     })
 
-     command(client, 'tiktok', (message) => {
+     command(client, 'vAzoniq tiktok', (message) => {
         message.channel.send('Über diesen Link kommst du ganz einfach zum Tiktok Account von vAzoniq! https://www.tiktok.com/@twitch.vazoniq7882?lang=de-DE')
     })
 
-     command(client, 'maushaus', (message) => {
+     command(client, 'vAzoniq maushaus', (message) => {
         message.channel.send('Mit diesem Link kommst du zum Besten Youtuber auf Yt! ;) https://www.youtube.com/channel/UCqoQRnEXO1GaJMTSTFzpFBQ ')
  
     })
