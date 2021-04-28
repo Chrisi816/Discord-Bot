@@ -37,7 +37,7 @@ const validatePermissions = (permissions) => {
 
     for (const permission of permissions) {
         if (!validPermissions.includes(permission)) {
-           throw new Error(`Unbekannte Permission node "${permission}"`)
+           throw new Error(`Unbekannter Permission node "${permission}"`)
         }
     }
 }
@@ -113,3 +113,4 @@ module.exports = (client, commandOptions) =>  {
       }
    })
 }
+

@@ -1,5 +1,6 @@
 module.exports = {
     commands: 'invites',
+    description: 'Totale Invites',
     callback: (message) => {
         const { guild } = message
 
@@ -15,7 +16,7 @@ module.exports = {
                 inviteCounter[name] = (inviteCounter[name] || 0) + uses
             })
 
-            let replyText = '**Das sind die Leute die am meisten Einladungen verschickt haben:**'
+            let replyText = '**Das sind die Personen die am meisten Einladungen verschickt haben:**'
 
             const sortedInvites = Object.keys(inviteCounter).sort((a, b) => inviteCounter[b] - inviteCounter[a])
 
@@ -25,7 +26,7 @@ module.exports = {
 
             for (const invite of sortedInvites) {
                 const count = inviteCounter[invite]
-                replyText += `\n**${invite}** hat ${count} Leute eingeladen!`
+                replyText += `\n**${invite}** hat ${count} Person(en) eingeladen!`
             }
 
             message.reply(replyText)

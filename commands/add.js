@@ -4,6 +4,7 @@ module.exports = {
     permissionError: 'Du musst ein Admin oder höher sein um diesen Command zu nützen!',
     minArgs: 2,
     maxArgs: 2,
+    description: 'Adds two numbers',
     callback: (message, arguments, text) => {
         // Todo: Add the numbers
     }, 

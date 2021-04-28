@@ -9,20 +9,20 @@ const PREFIX = '!'
 const mongo = require('./mongo')
 const command = require('./commands')
 const commands = require('./commands')
-const warnFile = require('./warns.json')
+const warnFile = require('./Json/warns.json')
 const membercount = require('./member-count')
 const antiAd = require('./anti-ad')
-const scalingChannels1 = require('./scaling-channel1')
-const scalingChannels = require('./scaling-channels')
-const inviteNotifications = require('./invite-notifications')
-const xpfile = require("./xp.json")
-const coinfile = require("./coins.json")
+const scalingChannels1 = require('./scaling-channels/scaling-channel1')
+const scalingChannels = require('./scaling-channels/scaling-channels')
+const inviteNotifications = require('./Invites/invite-notifications')
+const xpfile = require("./Json/xp.json")
+const coinfile = require("./Json/coins.json")
 const { countReset } = require('console')
 const { isRegExp } = require('util')
 const { Mongoose } = require('mongoose')
 const welcome = require('./welcome')
 const loadCommands = require('./commands/load-commands')
-const scalingChannel2 = require('./scaling-channel2')
+const scalingChannel2 = require('./scaling-channels/scaling-channel2')
 
 const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
 
@@ -216,7 +216,7 @@ client.on('ready', async () => {
                         name: `Fun Commands`,
                         value: `**!suggestion/vorschlag** - Erstelle ein Vorschlag! (**!** Umfrage Channel muss vorhanden sein **!**)
                                **/status** - Die Server Informationen vom vAzoniq Smp werden gepostet!
-                               **!ip** - Die Ip vom Server wird veröffentlicht!  ` 
+                               **!ip** - Die Ip vom Smp Server wird veröffentlicht!  ` 
                     }
                 )
                 message.channel.send(embed)

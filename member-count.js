@@ -3,7 +3,7 @@ module.exports = async (client) => {
     setInterval(() => {
         const memberCount = guild.memberCount;
         const channel = guild.channels.cache.get('829067744380321874');
-        channel.setName(`Member: ${memberCount.toLocaleString()}`);
+        channel.setName(`Alle Member: ${memberCount.toLocaleString()}`);
         console.log('Updating Member Count');
     } , 40000);
    
