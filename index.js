@@ -111,7 +111,7 @@ client.on('ready', async () => {
          message.channel.send(`Du hast ${zahl} Ehre`)
 
     })
-        client.on('message', async message => {
+    client.on('message', async message => {
         if (message.content === '!meme') {
           let subreddits = [
             "memes"
@@ -229,8 +229,11 @@ client.on('ready', async () => {
                     },
                     {
                         name: `Fun Commands`,
-                        value: `**!suggestion/vorschlag** - Erstelle ein Vorschlag! (**!** Umfrage Channel muss vorhanden sein **!**)
-                                
+                        value: `
+                               **!meme** - Ein Random Reddit Meme wird erscheinen.
+                               **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)
+                               **/status** - Die Server Informationen vom vAzoniq Smp werden gepostet.
+                               **!ip** - Die Ip vom Smp Server wird veröffentlicht.  ` 
                     }
                 )
                 message.channel.send(embed)
@@ -670,6 +673,8 @@ function ipCommand(message) {
         .replace('{address}', SERVER_ADDRESS).replace('{port}', SERVER_PORT)
     message.reply(response);
 }
+
+
     
 })
 client.login(config.token)
