@@ -2,8 +2,10 @@ const path = require('path')
 const fs = require ('fs')
 const Discord = require ('discord.js')
 const client = new Discord.Client({partials: ['MESSAGE', 'CHANNEL', 'REACTION']})
+const util = require('minecraft-server-util');
 
 const config = require('./config.json')
+const PREFIX = '!'
 const mongo = require('./mongo')
 const command = require('./commands')
 const commands = require('./commands')
@@ -19,44 +21,41 @@ const { countReset } = require('console')
 const { isRegExp } = require('util')
 const { Mongoose } = require('mongoose')
 const welcome = require('./welcome')
+const loadCommands = require('./commands/load-commands')
+const scalingChannel2 = require('./scaling-channel2')
 
 const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
+
+const SERVER_ADDRESS = '176.57.152.248'; 
+const SERVER_PORT = 25565; 
+
+const STATUS_COMMAND = '/status'; 
+const STATUS_ERROR = 'Error getting Minecraft server status...';
+const STATUS_ONLINE = 'Der Server ist **online**  -  ';
+const STATUS_PLAYERS = '**{online}** Leute sind am Spielen!'
+const STATUS_EMPTY = 'Aktuell ist keiner drauf!';
+
+const IP_COMMAND = '/ip'
+const IP_RESPONSE = 'Die Server Ip ist: `{address}:{port}`'
 
 
 antiAd(client)
 inviteNotifications(client)
-
-const baseFile = 'command-base.js'
-const commandBase = require (`./commands/${baseFile}`)
-
-const readCommands = (dir) => {
-   const files = fs.readdirSync(path.join(__dirname, dir))
-   for (const file of files) {
-       const stat = fs.lstatSync(path.join(__dirname, dir, file))
-       if (stat.isDirectory()) {
-           readCommands(path.join(dir,file))
-       } else if (file !== baseFile) {
-           const option = require(path.join(__dirname, dir, file))
-           commandBase(client, option)
-       }
-   }
-}
-
-readCommands('commands')
-
+loadCommands(client)
 
 client.on('ready', async () => {
     console.log('Ich bin Bereit!')
     membercount(client)
     scalingChannels(client)
     scalingChannels1(client)
+    scalingChannel2(client)
     welcome(client)
 
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    `!link um cool zu werden 😎`,
-    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686`]
+    '!link um Cool zu werden 😎',
+    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
@@ -72,8 +71,7 @@ client.on('ready', async () => {
         }
     })
 })
-
-  client.on('ready', () => {
+    client.on('ready', () => {
 
    command(client, 'twitch', (message) => {
        message.channel.send('Über diesen Link kommst du ganz einfach zum Twitch Kanal von vAzoniq! https://www.twitch.tv/vazoniq7882')
@@ -109,7 +107,7 @@ client.on('ready', async () => {
 
     })
      command(client, 'ehre', (message) => {
-        const zahl = Math.floor(Math.random() * 2)
+        const zahl = Math.floor(Math.random() * 100) + 5
          message.channel.send(`Du hast ${zahl} Ehre`)
 
     })
@@ -212,8 +210,13 @@ client.on('ready', async () => {
                         value: `
                         **!Coins** - Anzahl der Coins die du besitzt!
                         **!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
-                        **!buyrank** - Du kannst dir für die Coins Ränge kaufen!
-                        `
+                        **!buyrank** - Kaufe dir für deine Erspielten Coins, besondere Ränge! `
+                    },
+                    {
+                        name: `Fun Commands`,
+                        value: `**!suggestion/vorschlag** - Erstelle ein Vorschlag! (**!** Umfrage Channel muss vorhanden sein **!**)
+                               **/status** - Die Server Informationen vom vAzoniq Smp werden gepostet!
+                               **!ip** - Die Ip vom Server wird veröffentlicht!  ` 
                     }
                 )
                 message.channel.send(embed)
@@ -265,8 +268,6 @@ client.on('ready', async () => {
             `${tag} Du hast keine Rechte diesen Command auszuführen!`
         )
         }
-        
-
 
     })
     client.on("message", async message =>{
@@ -282,7 +283,7 @@ client.on('ready', async () => {
             })
         })
 
-    client.on("message", function(message){
+        client.on("message", function(message){
 
         if(message.author.bot) return;
 
@@ -583,13 +584,6 @@ client.on('ready', async () => {
                 if(err) console.log(err)
             })
             
-            client.on("guildMemberAdd", function(member){
-
-                const tag = `<@${member.id}>`
-        
-                let channel = member.guild.channels.cache.find(ch => ch.name === "╔═丨✌𝕎𝕚𝕝𝕝𝕜𝕠𝕞𝕞𝕖𝕟✌");
-                channel.send( `Hey ${tag} !\nWillkommen auf dem Community Discord von vAzoniq!`);
-            })
         }
     }) 
       command(client, 'Admin', (message) => {
@@ -616,10 +610,52 @@ client.on('ready', async () => {
                 value: `
                 **!createwelcomechannel** <Nachricht> - Ein Welcomechannel wird festgellegt + Nachricht was beim beitreten stehen soll!
                 **!createtextchannel** - Erstelle ganz einfach einen Text Channel!
+                **!addcoins** <@> <Anzahl> - Gebe eine bestimmte Azahl an Coins an User! 
                 `
             }
         )
         message.channel.send(embed)
     })
+
+    const cacheTime = 15 * 1000;
+let data, lastUpdated = 0;
+
+client.on('message', message => { 
+    if(message.content.trim() == STATUS_COMMAND) {
+        statusCommand(message);
+    } else if(message.content.trim() == IP_COMMAND) {
+        ipCommand(message);
+    }
+});
+
+function statusCommand(message) { 
+    getStatus().then(data => {
+        let status = STATUS_ONLINE;
+        status += data.onlinePlayers ? 
+            STATUS_PLAYERS.replace('{online}', data.onlinePlayers) : STATUS_EMPTY;
+        message.reply(status);
+    }).catch(err => {
+        console.error(err);
+        message.reply(STATUS_ERROR);
+    })
+}
+
+function getStatus() {
+   
+    if (Date.now() < lastUpdated + cacheTime) return Promise.resolve(data);
+    return util.status(SERVER_ADDRESS, { port: SERVER_PORT })
+        .then(res => {
+            data = res;
+            lastUpdated = Date.now();
+            return data;
+        })
+}
+
+function ipCommand(message) { 
+    const response = IP_RESPONSE
+        .replace('{address}', SERVER_ADDRESS).replace('{port}', SERVER_PORT)
+    message.reply(response);
+}
+    
 })
 client.login(config.token)
