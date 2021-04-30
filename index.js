@@ -6,7 +6,10 @@ const util = require('minecraft-server-util');
 const api = require("imageapi.js")
 
 const config = require('./config.json')
+const commandBase = require('./commands/command-base')
 const PREFIX = '!'
+const NSFW = require("discord-nsfw");
+const nsfw = new NSFW();
 const mongo = require('./mongo')
 const command = require('./commands')
 const commands = require('./commands')
@@ -24,6 +27,7 @@ const { Mongoose } = require('mongoose')
 const welcome = require('./welcome')
 const loadCommands = require('./commands/load-commands')
 const scalingChannel2 = require('./scaling-channels/scaling-channel2')
+const levels = require('./level')
 
 const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
 
@@ -43,6 +47,7 @@ const IP_RESPONSE = 'Die Server Ip ist: `{address}:{port}`'
 antiAd(client)
 inviteNotifications(client)
 loadCommands(client)
+levels(client)
 
 client.on('ready', async () => {
     console.log('Ich bin Bereit!')
@@ -55,7 +60,7 @@ client.on('ready', async () => {
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    `Developed by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
+    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
@@ -127,7 +132,8 @@ client.on('ready', async () => {
         }
       });
 
-
+     
+      
     // !member -> So viele Member sind aufm Server von vAzoniq!
    
    command(client, 'member', (message) => {
@@ -231,9 +237,7 @@ client.on('ready', async () => {
                         name: `Fun Commands`,
                         value: `
                                **!meme** - Ein Random Reddit Meme wird erscheinen.
-                               **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)
-                               **/status** - Die Server Informationen vom vAzoniq Smp werden gepostet.
-                               **!ip** - Die Ip vom Smp Server wird veröffentlicht.  ` 
+                               **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)`
                     }
                 )
                 message.channel.send(embed)
@@ -673,8 +677,5 @@ function ipCommand(message) {
         .replace('{address}', SERVER_ADDRESS).replace('{port}', SERVER_PORT)
     message.reply(response);
 }
-
-
-    
 })
 client.login(config.token)
