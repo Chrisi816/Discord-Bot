@@ -1,5 +1,4 @@
 module.exports = {
-    cooldown: '10s',
     commands: 'ping',
     description: 'Pingtest',
     callback: (message, arguments, text, client) => {

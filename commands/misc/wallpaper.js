@@ -3,12 +3,12 @@ const NSFW = require("discord-nsfw");
 const nsfw = new NSFW();
 
 module.exports = {
-    commands: ['Boobs'],
-    description: 'Ein Boobs bild wird gepostet!',
+    commands: ['wallpaper'],
+    description: '',
     callback: async (message, discord) => {
-        const image = await nsfw.boobs();
+        const image = await nsfw.wallpaper();
            const embed = new Discord.MessageEmbed()
-             .setTitle(`Hier ein paar Boobs für vAzoniq(Patrick) da er ein Hund ist `)
+             .setTitle(``)
            .setColor("RANDOM")
           .setImage(image);
         message.channel.send(embed);
