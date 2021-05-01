@@ -14,19 +14,18 @@ const mongo = require('./mongo')
 const command = require('./commands')
 const commands = require('./commands')
 const warnFile = require('./Json/warns.json')
-const membercount = require('./member-count')
+const membercount = require('./channels/member-count')
 const antiAd = require('./anti-ad')
-const scalingChannels1 = require('./scaling-channels/scaling-channel1')
-const scalingChannels = require('./scaling-channels/scaling-channels')
+const scalingChannels1 = require('./channels/scaling-channel1')
+const scalingChannels = require('./channels/scaling-channels')
 const inviteNotifications = require('./Invites/invite-notifications')
-const xpfile = require("./Json/xp.json")
 const coinfile = require("./Json/coins.json")
 const { countReset } = require('console')
 const { isRegExp } = require('util')
 const { Mongoose } = require('mongoose')
-const welcome = require('./welcome')
+const welcome = require('./channels/welcome')
 const loadCommands = require('./commands/load-commands')
-const scalingChannel2 = require('./scaling-channels/scaling-channel2')
+const scalingChannel2 = require('./channels/scaling-channel2')
 const levels = require('./level')
 
 const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
@@ -60,21 +59,15 @@ client.on('ready', async () => {
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    `Developed by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
+    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
 
         client.user.setActivity(rstatus);
     },4000)
-
-    await mongo().then(mongoose => {
-        try {
-          console.log('Connected to Mongo!')
-        } finally {
-         mongoose.connection.close()
-        }
-    })
+    
+    await mongo()
 })
     client.on('ready', () => {
 
@@ -238,6 +231,21 @@ client.on('ready', async () => {
                         value: `
                                **!meme** - Ein Random Reddit Meme wird erscheinen.
                                **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)`
+                    },
+                    {
+                        name:`Nsfw Command (**!** Adult Content **!**)`,
+                        value:`
+                               **!4k** - Soon
+                               **!anal** - Soon
+                               **!ass** - Soon
+                               **!boobs** - Soon
+                               **!gwild** - Soon
+                               **!hentai** - Soon
+                               **!porn** - Soon
+                               **!pussy** - Soon
+                               **!solo** - Soon
+                               **!thigh** - Soon
+                               **!wallpaper** - Soon`
                     }
                 )
                 message.channel.send(embed)
@@ -320,48 +328,6 @@ client.on('ready', async () => {
             }
         })
 
-        var addXP = Math.floor(Math.random() * 8) + 3;
-
-        if(!xpfile[message.author.id]){
-            xpfile[message.author.id] = {
-                xp: 0,
-                level: 1,
-                reqxp: 50
-            }
-
-            fs.writeFile("./xp.json",JSON.stringify(xpfile),function(err){
-                if(err) console.log(err)
-            })
-        }
-
-        xpfile[message.author.id].xp += addXP
-
-        if(xpfile[message.author.id].xp > xpfile[message.author.id].reqxp){
-            xpfile[message.author.id].xp -= xpfile[message.author.id].reqxp // xp abziehen
-            xpfile[message.author.id].reqxp *= 1.25 //xp die man braucht erhöhern
-            xpfile[message.author.id].reqxp = Math.floor(xpfile[message.author.id].reqxp) // reqxp
-            xpfile[message.author.id].level += 1 // 1 Level hinzufügen
-
-            message.reply("Ist nun Level **"+xpfile[message.author.id].level+"**!")
-      }
-
-      fs.writeFile("./xp.json",JSON.stringify(xpfile),function(err){
-          if(err) console.log(err)
-      })
-
-      if(message.content.startsWith("!level")){
-          let user = message.mentions.users.first() || message.author
-
-          let embed = new Discord.MessageEmbed()
-          .setTitle("Level Karte")
-          .setColor("GREEN")
-          .addField("Level:",xpfile[user.id].level)
-          .addField("XP:", xpfile[user.id].xp+"/"+xpfile[user.id].reqxp)
-          .addField("Xp bis zum nächsten Level: ", xpfile[user.id].reqxp)
-          
-          message.channel.send(embed)
-        }
-
         if(message.content.startsWith("!warn")){
             let user = message.mentions.users.first()  
             let grund = message.content.split(" ").slice(2).join 
@@ -427,8 +393,9 @@ client.on('ready', async () => {
             }
             message.channel.bulkDelete(50);
             message.channel.send("Ich habe die letzten 50 Nachrichten gelöscht!")
-        }
 
+        }
+    
         if(message.content.startsWith("!flip")){
 
             if(!coinfile[message.author.id]){
@@ -636,6 +603,8 @@ client.on('ready', async () => {
             }
         )
         message.channel.send(embed)
+
+        
     })
 
     const cacheTime = 15 * 1000;
@@ -677,5 +646,8 @@ function ipCommand(message) {
         .replace('{address}', SERVER_ADDRESS).replace('{port}', SERVER_PORT)
     message.reply(response);
 }
+var images = ["1", "2", "3", "4" ];
+var image = Math.floor(Math.random() * images.length);
+    
 })
 client.login(config.token)
