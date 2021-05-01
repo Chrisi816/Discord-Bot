@@ -60,7 +60,7 @@ client.on('ready', async () => {
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
+    `Developed by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
