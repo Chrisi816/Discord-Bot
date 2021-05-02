@@ -4,7 +4,7 @@ const nsfw = new NSFW();
 
 module.exports = {
     commands: ['porn'],
-    cooldown: 10,
+    cooldown: 4,
     description: 'Ein Pussy Bild wird gepostet!',
     callback: async (message, discord) => {
         const image = await nsfw.pgif();
