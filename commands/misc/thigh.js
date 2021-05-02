@@ -5,6 +5,7 @@ const nsfw = new NSFW();
 module.exports = {
     commands: ['thigh'],
     description: 'thigh',
+    cooldown: 10,
     callback: async (message, discord) => {
         const image = await nsfw.thigh();
         const embed = new Discord.MessageEmbed()

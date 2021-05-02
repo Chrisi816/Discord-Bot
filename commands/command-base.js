@@ -42,6 +42,8 @@ const validatePermissions = (permissions) => {
     }
 }
 
+let recentlyRan = []
+
 module.exports = (client, commandOptions) =>  {
    let {
        commands,
@@ -49,6 +51,7 @@ module.exports = (client, commandOptions) =>  {
        permissionError = 'Du hast nicht genug Rechte um diesen Command auszuführen!',
        minArgs = 0, 
        maxArgs = null,
+       cooldown = -1,
        permissions = [],
        requiredRoles = [],
        
@@ -94,7 +97,13 @@ module.exports = (client, commandOptions) =>  {
                       
                         return
                     }
-         }
+                }
+
+                let cooldownString = `${guild.id}-${member.id}-${commands[0]}`
+                if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
+                    message.reply('Wayooo warte mal ein paar Sekunden! ')
+                    return
+                }
 
          const arguments = content.split(/[ ]+/)
 
@@ -107,6 +116,18 @@ module.exports = (client, commandOptions) =>  {
             message.reply(`Falscher Syntax! Benutze ${prefix}${alias} ${expectedArgs}`)
             return
          }
+
+        if (cooldown > 0) {
+            recentlyRan.push(cooldownString)
+               
+            setTimeout(() => {
+                recentlyRan = recentlyRan.filter((string) => {
+                    return string !== cooldownString
+                })
+
+            }, 1000 * cooldown)
+        }
+
          callback(message, arguments, arguments.join(' '), client)
 
          return
