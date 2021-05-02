@@ -15,7 +15,7 @@ const command = require('./commands')
 const commands = require('./commands')
 const warnFile = require('./Json/warns.json')
 const membercount = require('./channels/member-count')
-const antiAd = require('./anti-ad')
+const antiAd = require('./Invites/anti-ad')
 const scalingChannels1 = require('./channels/scaling-channel1')
 const scalingChannels = require('./channels/scaling-channels')
 const inviteNotifications = require('./Invites/invite-notifications')
@@ -59,7 +59,7 @@ client.on('ready', async () => {
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    `Developed by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
+    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
@@ -71,39 +71,6 @@ client.on('ready', async () => {
 })
     client.on('ready', () => {
 
-   command(client, 'vAzoniq twitch', (message) => {
-       message.channel.send('Über diesen Link kommst du ganz einfach zum Twitch Kanal von vAzoniq! https://www.twitch.tv/vazoniq7882')
-
-    })
-
-    command(client, 'vAzoniq gaming', (message) => {
-        message.channel.send('Über diesen Link kommst du ganz einfach zu Instant Gaming, dort kannst du ganz billig Spiele kaufen! https://www.instant-gaming.com/?igr=vAzoniq-7882 (Dies ist ein Affiliate Link)')
- 
-     })
-
-    command(client, 'vAzoniq key', (message) => {
-        message.channel.send('Über diesen Link kommst du ganz einfach zu Keydrop, dort kannst du für geringes Geld CSGO Kisten aufmachen, diese Lohnen sich mehr über die Website zu kaufen als im eigendlichen Spiel! https://key-drop.com/?code=RXSQJ0EH (Dies ist ein Affiliate Link)')
- 
-    })
- 
-    command(client, 'vAzoniq insta', (message) => {
-        message.channel.send('Über diesen Link kommst du ganz einfach zum Insta Account von vAzoniq! https://www.instagram.com/twitch.vazoniq7882/')
- 
-    })
-
-     command(client, 'vAzoniq tiktok', (message) => {
-        message.channel.send('Über diesen Link kommst du ganz einfach zum Tiktok Account von vAzoniq! https://www.tiktok.com/@twitch.vazoniq7882?lang=de-DE')
-    })
-
-     command(client, 'vAzoniq maushaus', (message) => {
-        message.channel.send('Mit diesem Link kommst du zum Besten Youtuber auf Yt! ;) https://www.youtube.com/channel/UCqoQRnEXO1GaJMTSTFzpFBQ ')
- 
-    })
-
-     command(client, 'link', (message) => {
-        message.channel.send('Einladungslink vom Bot: https://bit.ly/2QtBVGi ')
-
-    })
      command(client, 'ehre', (message) => {
         const zahl = Math.floor(Math.random() * 100) + 5
          message.channel.send(`Du hast ${zahl} Ehre`)
@@ -214,38 +181,38 @@ client.on('ready', async () => {
                     {
                         name: 'Allgemeine Commands:',
                         value: `
-                        **!serverinfo** - Alle Informationen vom Server werden gepostet!
-                        **!link** - Der Einladungslink vom Bot wird veröffentlicht!
-                        **!member** - Anzahl der Aktuellen Member! 
-                        **!level** - Sehe dein aktuelles Level!` 
+**!serverinfo** - Alle Informationen vom Server werden gepostet!
+**!link** - Der Einladungslink vom Bot wird veröffentlicht!
+**!member** - Anzahl der Aktuellen Member! 
+**!level** - Sehe dein aktuelles Level!` 
                     },
                     {
                         name: 'Glückspiel Commands:',
                         value: `
-                        **!Coins** - Anzahl der Coins die du besitzt!
-                        **!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
-                        **!buyrank** - Kaufe dir für deine Erspielten Coins, besondere Ränge! `
+**!Coins** - Anzahl der Coins die du besitzt!
+**!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
+**!buyrank** - Kaufe dir für deine Erspielten Coins, besondere Ränge! `
                     },
                     {
                         name: `Fun Commands`,
                         value: `
-                               **!meme** - Ein Random Reddit Meme wird erscheinen.
-                               **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)`
+**!meme** - Ein Random Reddit Meme wird erscheinen.
+**!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)`
                     },
                     {
                         name:`Nsfw Command (**!** Adult Content **!**)`,
                         value:`
-                               **!4k** - Soon
-                               **!anal** - Soon
-                               **!ass** - Soon
-                               **!boobs** - Soon
-                               **!gwild** - Soon
-                               **!hentai** - Soon
-                               **!porn** - Soon
-                               **!pussy** - Soon
-                               **!solo** - Soon
-                               **!thigh** - Soon
-                               **!wallpaper** - Soon`
+**!4k** - Soon
+**!anal** - Soon
+**!ass** - Soon
+**!boobs** - Soon
+**!gwild** - Soon
+**!hentai** - Soon
+**!porn** - Soon
+**!pussy** - Soon
+**!solo** - Soon
+**!thigh** - Soon
+**!wallpaper** - Soon`                        
                     }
                 )
                 message.channel.send(embed)
@@ -365,37 +332,7 @@ client.on('ready', async () => {
                  if(err) console.log(err)
              })
         }
-        if(message.content === "!clear 100"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(100);
-            message.channel.send("Ich habe die letzten 100 Nachrichten gelöscht!")
-        }
-
-        if(message.content === "!clear 10"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(10);
-            message.channel.send("Ich habe die letzten 10 Nachrichten gelöscht!")
-        }
-
-        if(message.content === "!clear 50"){
-            message.delete();
-            if(!message.member.hasPermission("MANAGE_MESSAGES")){
-                message.channel.send(`Du hast nicht genügend Rechte um diesen Command auszuführen!`)
-                return;
-            }
-            message.channel.bulkDelete(50);
-            message.channel.send("Ich habe die letzten 50 Nachrichten gelöscht!")
-
-        }
-    
+        
         if(message.content.startsWith("!flip")){
 
             if(!coinfile[message.author.id]){
