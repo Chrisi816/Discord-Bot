@@ -5,7 +5,7 @@ const nsfw = new NSFW();
 module.exports = {
     commands: ['solo'],
     description: 'solo',
-    cooldown: 10,
+    cooldown: 4,
     callback: async (message, discord) => {
         const image = await nsfw.solo();
         const embed = new Discord.MessageEmbed()
