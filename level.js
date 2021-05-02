@@ -2,19 +2,20 @@ const mongo = require('./mongo')
 const profileSchema = require('./schemas/profile-schema')
 
 module.exports = (client) => {
-    client.on('message', message => {
+    client.on('message', (message) => {
         const { guild, member } = message
 
         addXP(guild.id, member.id, Math.floor(Math.random() * 15) + 13, message)
     })
 }
 
-const getNeededXP = level => level * level * 70
+const getNeededXP = (level) => level * level * 70
 
 const addXP = async (guildId, userId, xpToAdd, message) => {
-   await mongo().then(async mongoose => {
+   await mongo().then(async (mongoose) => {
        try{
-         const result = await profileSchema.findOneAndUpdate({
+         const result = await profileSchema.findOneAndUpdate(
+         {
             guildId,
             userId
          }, {
