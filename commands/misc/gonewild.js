@@ -5,7 +5,7 @@ const nsfw = new NSFW();
 module.exports = {
     commands: ['gwild'],
     description: '!',
-    cooldown: 10,
+    cooldown: 4,
     callback: async (message, discord) => {
         const image = await nsfw.gonewild();
            const embed = new Discord.MessageEmbed()
