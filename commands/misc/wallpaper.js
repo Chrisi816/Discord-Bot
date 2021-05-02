@@ -5,7 +5,7 @@ const nsfw = new NSFW();
 module.exports = {
     commands: ['wallpaper'],
     description: '',
-    cooldown: 10,
+    cooldown: 4,
     callback: async (message, discord) => {
         const image = await nsfw.wallpaper();
            const embed = new Discord.MessageEmbed()
