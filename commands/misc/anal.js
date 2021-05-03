@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.anal();
         const embed = new Discord.MessageEmbed()
-          .setTitle(`Anal`)
+          .setTitle(`Du bist Actelly komisch`)
         .setColor("RANDOM")
        .setImage(image);
      message.channel.send(embed);

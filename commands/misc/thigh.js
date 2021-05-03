@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.thigh();
         const embed = new Discord.MessageEmbed()
-          .setTitle(`thigh`)
+          .setTitle(`Actuelly Schenkel...`)
         .setColor("RANDOM")
        .setImage(image);
      message.channel.send(embed);

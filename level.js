@@ -4,8 +4,8 @@ const profileSchema = require('./schemas/profile-schema')
 module.exports = (client) => {
     client.on('message', (message) => {
         const { guild, member } = message
-
-        addXP(guild.id, member.id, Math.floor(Math.random() * 8) + 4, message)
+        if(message.author.bot) return;
+        addXP(guild.id, member.id, Math.floor(Math.random() * 15) + 13, message)
     })
 }
 

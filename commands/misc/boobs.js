@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.boobs();
            const embed = new Discord.MessageEmbed()
-             .setTitle(`Hier ein paar Boobs für vAzoniq(Patrick) da er ein Hund ist `)
+             .setTitle(`Paar Boobies...`)
            .setColor("RANDOM")
           .setImage(image);
         message.channel.send(embed);

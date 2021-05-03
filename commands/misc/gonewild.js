@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.gonewild();
            const embed = new Discord.MessageEmbed()
-             .setTitle(``)
+             .setTitle(`Wirklich wylde Nudes`)
            .setColor("RANDOM")
           .setImage(image);
         message.channel.send(embed);

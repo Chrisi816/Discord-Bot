@@ -5,6 +5,7 @@ const client = new Discord.Client({partials: ['MESSAGE', 'CHANNEL', 'REACTION']}
 const util = require('minecraft-server-util');
 const api = require("imageapi.js")
 
+const Commando = require('discord.js-commando')
 const config = require('./config.json')
 const commandBase = require('./commands/command-base')
 const PREFIX = '!'
@@ -55,6 +56,7 @@ client.on('ready', async () => {
     scalingChannels1(client)
     scalingChannel2(client)
     welcome(client)
+
 
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
@@ -180,7 +182,7 @@ client.on('ready', async () => {
                 .setTitle(`**Command Hilfe**`)
                 .setThumbnail(icon)
                 .setColor(`ff0004`)
-                .setFooter('fresh', icon)
+                .setFooter('Avoniq Bot 2021', icon)
                 .addFields(
                     {
                         name: 'Allgemeine Commands:',
@@ -525,7 +527,7 @@ More Commands Soon `
         .setTitle(`**Admin-Command Hilfe**`)
         .setThumbnail(icon)
         .setColor(`ff0004`)
-        .setFooter('fresh', icon)
+        .setFooter('Azoniq Bot 2021', icon)
         .addFields(
             {
                 name: '**Moderation Commands**',
@@ -591,6 +593,5 @@ function ipCommand(message) {
 var images = ["1", "2", "3", "4" ];
 var image = Math.floor(Math.random() * images.length);
 
-    
 })
 client.login(config.token)

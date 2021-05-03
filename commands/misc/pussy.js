@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.pussy();
            const embed = new Discord.MessageEmbed()
-             .setTitle(`Pussys <3`)
+             .setTitle(`Paar Pussys <3`)
            .setColor("RANDOM")
           .setImage(image);
         message.channel.send(embed);

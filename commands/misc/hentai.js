@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.hentai();
         const embed = new Discord.MessageEmbed()
-          .setTitle(`Hentai`)
+          .setTitle(`Hantai`)
         .setColor("RANDOM")
        .setImage(image);
      message.channel.send(embed);

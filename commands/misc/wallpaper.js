@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.wallpaper();
            const embed = new Discord.MessageEmbed()
-             .setTitle(``)
+             .setTitle(`Animie Wallpapers `)
            .setColor("RANDOM")
           .setImage(image);
         message.channel.send(embed);

@@ -9,7 +9,7 @@ module.exports = {
     callback: async (message, discord) => {
         const image = await nsfw.solo();
         const embed = new Discord.MessageEmbed()
-          .setTitle(`Solo`)
+          .setTitle(`Du willst Animie Nudes? Hier...`)
         .setColor("RANDOM")
        .setImage(image);
      message.channel.send(embed);
