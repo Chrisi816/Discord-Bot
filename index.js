@@ -61,7 +61,7 @@ client.on('ready', async () => {
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
+    `Developed by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
@@ -206,6 +206,11 @@ client.on('ready', async () => {
 **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)`
                     },
                     {
+                        name:`Musik Commands`, 
+                        value: `
+**!play** <Link> - Spielt Musik ab `
+                    },
+                    {
                         name:`Nsfw Command (**!** Adult Content **!**)`,
                         value:`
 **!4k** - Sehe dir ein paar 4k Nudes an!
@@ -220,7 +225,8 @@ client.on('ready', async () => {
 **!thigh** - Naja, ein Paar Schenkel... 
 **!wallpaper** - Animie Wallpapers? 
 More Commands Soon `                        
-                    }
+                    },
+                   
                 )
                 message.channel.send(embed)
     }) 
