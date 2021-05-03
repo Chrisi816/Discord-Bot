@@ -59,7 +59,7 @@ client.on('ready', async () => {
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`,
-    `Developed by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
+    `Created by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
@@ -74,8 +74,9 @@ client.on('ready', async () => {
      command(client, 'ehre', (message) => {
         const zahl = Math.floor(Math.random() * 100) + 5
          message.channel.send(`Du hast ${zahl} Ehre`)
-
+ 
     })
+
     client.on('message', async message => {
         if (message.content === '!meme') {
           let subreddits = [
@@ -92,8 +93,11 @@ client.on('ready', async () => {
         }
       });
 
-     
-      
+      command(client, 'test', (message) => {
+          number = 6;
+          imageNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1 
+          message.channel.send ("Wer mag keine Frauen?", {files: ["./images/" + imageNumber + ".jpg"]})
+      })
     // !member -> So viele Member sind aufm Server von vAzoniq!
    
    command(client, 'member', (message) => {
@@ -202,17 +206,17 @@ client.on('ready', async () => {
                     {
                         name:`Nsfw Command (**!** Adult Content **!**)`,
                         value:`
-**!4k** - Soon
+**!4k** - Sehe dir ein paar 4k Nudes an!
 **!anal** - Soon
 **!ass** - Soon
-**!boobs** - Soon
+**!boobs** - Ein Paar Boobies Schaden nie?!
 **!gwild** - Soon
-**!hentai** - Soon
-**!porn** - Soon
+**!hentai** - Du magst Animies? Ach ok Perfekt...
+**!porn** - Eigentlich ein Porno aber halt als Gif!
 **!pussy** - Soon
 **!solo** - Soon
 **!thigh** - Soon
-**!wallpaper** - Soon`                        
+**!wallpaper** - Animie Wallpapers? `                        
                     }
                 )
                 message.channel.send(embed)
@@ -525,18 +529,18 @@ client.on('ready', async () => {
             {
                 name: '**Moderation Commands**',
                 value: `
-                **!ban** <@name> - Bannt den ausgewählten Nutzer! 
-                **!kick** <@name> - Kickt den ausgewählten Nutzer!
-                **!warn** <@name> - Warnt den ausgewählten Nutzer, dieser wird nach dem 3ten Warn gekickt!
-                **!clear** 10,50,100 - Cleart die Letzten 10/50/100 Nachrichten!`
+**!ban** <@name> - Bannt den ausgewählten Nutzer! 
+**!kick** <@name> - Kickt den ausgewählten Nutzer!
+**!warn** <@name> - Warnt den ausgewählten Nutzer, dieser wird nach dem 3ten Warn gekickt!
+**!clear** 10,50,100 - Cleart die Letzten 10/50/100 Nachrichten!`
             },
             {
                 name: '**Allgemeine Admin Commands**',
                 value: `
-                **!createwelcomechannel** <Nachricht> - Ein Welcomechannel wird festgellegt + Nachricht was beim beitreten stehen soll!
-                **!createtextchannel** - Erstelle ganz einfach einen Text Channel!
-                **!addcoins** <@> <Anzahl> - Gebe eine bestimmte Azahl an Coins an User! 
-                `
+**!createwelcomechannel** <Nachricht> - Ein Welcomechannel wird festgellegt + Nachricht was beim beitreten stehen soll!
+**!createtextchannel** - Erstelle ganz einfach einen Text Channel!
+**!addcoins** <@> <Anzahl> - Gebe eine bestimmte Azahl an Coins an User! 
+`
             }
         )
         message.channel.send(embed)
@@ -585,6 +589,7 @@ function ipCommand(message) {
 }
 var images = ["1", "2", "3", "4" ];
 var image = Math.floor(Math.random() * images.length);
+
     
 })
 client.login(config.token)
