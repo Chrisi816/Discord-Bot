@@ -207,16 +207,17 @@ client.on('ready', async () => {
                         name:`Nsfw Command (**!** Adult Content **!**)`,
                         value:`
 **!4k** - Sehe dir ein paar 4k Nudes an!
-**!anal** - Soon
-**!ass** - Soon
+**!anal** - Ehm ja, wierdo...
+**!ass** - Bissel Arsch? 
 **!boobs** - Ein Paar Boobies Schaden nie?!
-**!gwild** - Soon
+**!gwild** - Actelly wylde Nudes
 **!hentai** - Du magst Animies? Ach ok Perfekt...
 **!porn** - Eigentlich ein Porno aber halt als Gif!
-**!pussy** - Soon
-**!solo** - Soon
-**!thigh** - Soon
-**!wallpaper** - Animie Wallpapers? `                        
+**!pussy** - Du willst paar Katzen? Spaß
+**!solo** - Animie Nudes?!
+**!thigh** - Naja, ein Paar Schenkel... 
+**!wallpaper** - Animie Wallpapers? 
+More Commands Soon `                        
                     }
                 )
                 message.channel.send(embed)
