@@ -7,7 +7,7 @@
     "discord.js-commando": "^0.12.3",
     "dotenv": "^9.0.0",
     "ffmpeg-static": "^4.3.0",
-    "fs": "*",
+    "fs-extra": "^10.0.0",
     "i": "^0.3.6",
     "imageapi.js": "^1.6.1",
     "minecraft-server-util": "^3.5.1",
