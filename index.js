@@ -5,7 +5,6 @@ const client = new Discord.Client({partials: ['MESSAGE', 'CHANNEL', 'REACTION']}
 const util = require('minecraft-server-util');
 const api = require("imageapi.js")
 
-const Commando = require('discord.js-commando')
 const config = require('./config.json')
 const commandBase = require('./commands/command-base')
 const PREFIX = '!'
@@ -27,7 +26,7 @@ const { Mongoose } = require('mongoose')
 const welcome = require('./channels/welcome')
 const loadCommands = require('./commands/load-commands')
 const scalingChannel2 = require('./channels/scaling-channel2')
-const levels = require('./level')
+const levels = require('./level');
 
 const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
 
@@ -73,10 +72,10 @@ client.on('ready', async () => {
 })
     client.on('ready', () => {
 
-     command(client, 'ehre', (message) => {
-        const zahl = Math.floor(Math.random() * 100) + 5
-         message.channel.send(`Du hast ${zahl} Ehre`)
- 
+     command(client, 'iq', (message) => {
+        const zahl = Math.floor(Math.random() * 130) + 50
+         message.reply(`Dein IQ liegt bei ${zahl}`)
+     
     })
 
     client.on('message', async message => {
@@ -123,7 +122,7 @@ client.on('ready', async () => {
     command(client, 'serverinfo', (message) => {
         const { guild } = message
 
-        const { name, region, owner, memberCount, channelCount , afkTimeout } = guild
+        const { name, region, owner, memberCount , afkTimeout } = guild
         const icon = guild.iconURL()
         const members = message.guild.members.cache
        
@@ -182,7 +181,7 @@ client.on('ready', async () => {
                 .setTitle(`**Command Hilfe**`)
                 .setThumbnail(icon)
                 .setColor(`ff0004`)
-                .setFooter('Avoniq Bot 2021', icon)
+                .setFooter('Azoniq Bot 2021', icon)
                 .addFields(
                     {
                         name: 'Allgemeine Commands:',
@@ -203,12 +202,14 @@ client.on('ready', async () => {
                         name: `Fun Commands`,
                         value: `
 **!meme** - Ein Random Reddit Meme wird erscheinen.
-**!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)`
+**!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)
+**!iq** - Überpfrüfe deine Schlauheit `
                     },
                     {
                         name:`Musik Commands`, 
                         value: `
-**!play** <Link> - Spielt Musik ab `
+**!play** <Link> - Spielt Musik ab 
+**!leave** - Der Bot verlässt den Aktuellen Channel`
                     },
                     {
                         name:`Nsfw Command (**!** Adult Content **!**)`,
