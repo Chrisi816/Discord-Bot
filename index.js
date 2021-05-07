@@ -1,5 +1,5 @@
 const path = require('path')
-const fs = require ('fs')
+const fs = require ('fs-extra')
 const Discord = require ('discord.js')
 const client = new Discord.Client({partials: ['MESSAGE', 'CHANNEL', 'REACTION']})
 const util = require('minecraft-server-util');
@@ -59,8 +59,7 @@ client.on('ready', async () => {
 
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
-    `mit ${client.users.cache.size} Usern`,
-    `Developed by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#5686!`]
+    `mit ${client.users.cache.size} Usern`]
 
     setInterval(() => {
         let rstatus = statuse[Math.floor(Math.random() * statuse.length)];
@@ -99,7 +98,6 @@ client.on('ready', async () => {
           imageNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1 
           message.channel.send ("Wer mag keine Frauen?", {files: ["./images/" + imageNumber + ".jpg"]})
       })
-    // !member -> So viele Member sind aufm Server von vAzoniq!
    
    command(client, 'member', (message) => {
          message.channel.send(
@@ -209,7 +207,8 @@ client.on('ready', async () => {
                         name:`Musik Commands`, 
                         value: `
 **!play** <Link> - Spielt Musik ab 
-**!leave** - Der Bot verlässt den Aktuellen Channel`
+**!leave** - Der Bot verlässt den Aktuellen Channel
+**!skip** - Der Bot skipt das laufende Lied`
                     },
                     {
                         name:`Nsfw Command (**!** Adult Content **!**)`,
@@ -229,7 +228,7 @@ More Commands Soon `
                     },
                    
                 )
-                message.channel.send(embed)
+        message.channel.send(embed)
     }) 
     
     command(client, 'ban', (message) => {
