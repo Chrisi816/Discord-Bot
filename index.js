@@ -199,6 +199,7 @@ client.on('ready', async () => {
                     {
                         name: `Fun Commands`,
                         value: `
+**!ball/bl** - Stelle dem Bot eine Frage, und er wird diese Weise beantworten!
 **!meme** - Ein Random Reddit Meme wird erscheinen.
 **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)
 **!iq** - Überpfrüfe deine Schlauheit `
