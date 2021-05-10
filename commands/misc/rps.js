@@ -40,7 +40,7 @@ module.exports = {
                     }
                 })
                 .catch(collected => {
-                    message.reply('Spiel ist zu ende, du hast es nicht geschafft, in der angegebnen Zeit zu interagieren!')
+                    message.reply('Das Spiel ist zu Ende, du hast es nicht geschafft, in der angegeben Zeit zu interagieren! ')
                 })
             
     }

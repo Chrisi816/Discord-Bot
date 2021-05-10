@@ -6,8 +6,10 @@ const util = require('minecraft-server-util');
 const api = require("imageapi.js")
 
 const config = require('./config.json')
+const covid = require('covidapi')
 const commandBase = require('./commands/command-base')
 const PREFIX = '!'
+const db = require('quick.db')
 const NSFW = require("discord-nsfw");
 const nsfw = new NSFW();
 const mongo = require('./mongo')
@@ -187,7 +189,8 @@ client.on('ready', async () => {
 **!serverinfo** - Alle Informationen vom Server werden gepostet!
 **!link** - Der Einladungslink vom Bot wird veröffentlicht!
 **!member** - Anzahl der Aktuellen Member! 
-**!level** - Sehe dein aktuelles Level!` 
+**!level** - Sehe dein aktuelles Level!
+**!covid** - Sehe dir den aktuellen stand des Coron viruses an!` 
                     },
                     {
                         name: 'Glückspiel Commands:',
@@ -202,7 +205,10 @@ client.on('ready', async () => {
 **!ball/bl** - Stelle dem Bot eine Frage, und er wird diese Weise beantworten!
 **!meme** - Ein Random Reddit Meme wird erscheinen.
 **!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)
-**!iq** - Überpfrüfe deine Schlauheit `
+**!iq** - Überpfrüfe deine Schlauheit
+**!ssp** - Lust auf eine Runde Schere, Stein, Papier?
+**!howgay** - Überprüfe ganz einfach wie Schwull du bist
+**!kwitze** - Lust auf ein paar kurze Witze?`
                     },
                     {
                         name:`Musik Commands`, 
@@ -557,6 +563,27 @@ More Commands Soon `
 
         
     })
+
+client.on('message', async message => {
+    if (message.content === "!covid") {
+        const img = 'https://s12.directupload.net/images/210510/3ue7d6xv.png'
+        const data = await covid.all()
+        const embed = new Discord.MessageEmbed()
+        .setThumbnail(img)
+        .setDescription("**Covid-19 Statistik**")
+        .setColor("RED")
+        .addField("Positive Fälle (insgesamt)", data.cases)
+        .addField("Aktive Fälle", data.active)
+        .addField("Heutige Fälle", data.todayCases)
+        .addField("Kritische Fälle", data.critical)
+        .addField("Tode", data.deaths)
+        .addField("Heutige Tode", data.todayDeaths )
+        .addField("Genesende", data.recovered)
+        .addField("Befallende Länder", data.affectedCountries)
+        .addField("Tests", data.tests)
+        message.channel.send(embed)
+    }
+})
 
     const cacheTime = 15 * 1000;
 let data, lastUpdated = 0;
