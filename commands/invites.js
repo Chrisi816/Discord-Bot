@@ -22,7 +22,7 @@ module.exports = {
 
             console.log(sortedInvites)
 
-            sortedInvites.length = 4
+            sortedInvites.length = 10
 
             for (const invite of sortedInvites) {
                 const count = inviteCounter[invite]

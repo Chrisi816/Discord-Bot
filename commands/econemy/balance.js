@@ -6,6 +6,7 @@ module.exports = {
     maxArgs: 1, 
     expectedArgs: "[KEKW]",
     callback: async (message) => {
+        const member = message.mentions.users.first() || message.author
         const target = message.mentions.users.first() || message.author
         const targetId = target.id
 
@@ -15,8 +16,8 @@ module.exports = {
         const coins = await economy.getCoins(guildId, userId)
         
         let embed = new Discord.MessageEmbed()
-            .setTitle(`Coins von ${target} `)
-            .setDescription(`Deine Aktuellen Coins: ${coins}  `)
+            .setDescription(`Coins von ${member} `)
+            .addField("**Deine Aktuellen Coins:**", coins)
             .setColor("YELLOW")
 
             message.channel.send(embed);
