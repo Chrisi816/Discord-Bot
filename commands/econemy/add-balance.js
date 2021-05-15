@@ -6,7 +6,6 @@ module.exports = {
     maxArgs: 2, 
     expectedArgs: "<Sein @> <Coins Anzahl>",
     permissionError: 'Du musst Admin oder höher sein, um diesen Command zu nützen!',
-    permissions: 'ADMINISTRATOR',
     callback: async (message, arguments) => {
         const mention = message.mentions.users.first()
 
@@ -27,5 +26,6 @@ module.exports = {
         const newCoins = await economy.addCoins(guildId, userId, coins)
 
         message.reply(`Du hast <@${userId}> ${coins} gegeben!Er hat jetzt ${newCoins} coins(s)!`)
-    }
+    },
+    permissions: 'ADMINISTRATOR',
 }

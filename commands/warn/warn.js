@@ -1,20 +1,21 @@
 const mongo = require('../../mongo')
 const warnSchema = require('../../schemas/warn-schema')
+const Discord = require('discord.js')
 
 module.exports = {
     commands: 'warn',
-    minArgs: 2,
+    minArgs: 1,
     expectedArgs: "<Target user's @> <reasons>",
-    permissions: 'ADMINISTRATOR',
     callback: async (message, arguments) => {
         const target = message.mentions.users.first()
         if (!target) {
-            message.reply('Bitte Tage jemanden zum Bannen!')
+            message.reply('Bitte Tage jemanden zum warnen!')
             return;
         }
  
         arguments.shift()
 
+        const user = message.mentions.users.first()  
         const guildId = message.guild.id
         const userId = message.member.id 
         const reason = arguments.join(' ')
@@ -24,6 +25,13 @@ module.exports = {
             timestamp: new Date().getTime(),
             reason
         }
+
+        const embed = new Discord.MessageEmbed()
+        .setTitle(`**!! WARN !!**`)
+        .setColor(`RED`)
+        .setDescription(`${user} Du wurdest Verwarnt!`)
+        .addField(`Grund:`, reason)
+        message.channel.send(embed)
 
         await mongo().then(async mongoose => {
             try {
@@ -46,5 +54,6 @@ module.exports = {
             }
         })
 
-    }
+    },
+    permissions: 'MANAGE_ROLES',
 }

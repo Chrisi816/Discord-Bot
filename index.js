@@ -15,7 +15,6 @@ const nsfw = new NSFW();
 const mongo = require('./mongo')
 const command = require('./commands')
 const commands = require('./commands')
-const warnFile = require('./Json/warns.json')
 const membercount = require('./channels/member-count')
 const antiAd = require('./Invites/anti-ad')
 const scalingChannels1 = require('./channels/scaling-channel1')
@@ -58,7 +57,6 @@ client.on('ready', async () => {
     scalingChannel2(client)
     welcome(client)
 
-
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
     `mit ${client.users.cache.size} Usern`]
@@ -70,237 +68,12 @@ client.on('ready', async () => {
     },4000)
     
     await mongo()
-})
-    client.on('ready', () => {
-
-     command(client, 'iq', (message) => {
-        const zahl = Math.floor(Math.random() * 130) + 50
-         message.reply(`Dein IQ liegt bei ${zahl}`)
-     
-    })
-
-    client.on('message', async message => {
-        if (message.content === '!meme') {
-          let subreddits = [
-            "memes"
-          ];
-          let subreddit = subreddits[Math.floor(Math.random()*(subreddits.length))];
-          let img = await api(subreddit)
-          const Embed = new Discord.MessageEmbed()
-          .setTitle(`Ein Random Reddit Meme <3  `)
-          .setURL(`https://www.reddit.com/r/arabfunny`)
-          .setColor('RANDOM')
-          .setImage(img)
-          message.channel.send(Embed)
-        }
-      });
-
-      command(client, 'test', (message) => {
-          number = 6;
-          imageNumber = Math.floor (Math.random() * (number - 1 + 1)) + 1 
-          message.channel.send ("Wer mag keine Frauen?", {files: ["./images/" + imageNumber + ".jpg"]})
-      })
    
-   command(client, 'member', (message) => {
-         message.channel.send(
-             `${message.guild.name} hat ${message.guild.memberCount} Member!`
-         )
-   })
-
-   command(client, 'createtextchannel', (message) => {
-       const name = message.content.replace('!createtextchannel', '')
-
-       message.guild.channels
-       .create(name, {
-           type: 'text',
-        })
-        .then((channel) => {
-            console.log(channel)
-        })
-    })
-
-    command(client, 'serverinfo', (message) => {
-        const { guild } = message
-
-        const { name, region, owner, memberCount , afkTimeout } = guild
-        const icon = guild.iconURL()
-        const members = message.guild.members.cache
-       
-
-        const embed = new Discord.MessageEmbed()
-        .setTitle(`**Server Informationen**`)
-        .setThumbnail(icon)
-        .setColor('RANDOM')
-        .setFooter (`Fresh diese`, icon)
-        .addFields(
-           {
-              name: '🎫⠀Server Name',
-              value: message.guild.name
-           },
-           {
-               name: '👑⠀Inhaber',
-               value: owner.user.tag,
-           },
-           {
-               name: '🌎⠀Region',
-               value: region,
-           },
-           {
-               name: '👥⠀Member',
-               value: memberCount,  
-           }, 
-           {
-                name: '🤖⠀Bots ',
-                value: members.filter(member => member.user.bot).size,
-           },
-           {
-                name: '👤⠀Menschen',
-                value: members.filter(member => !member.user.bot).size
-           },
-           {
-               name: '💬⠀Alle Text Kanäle ',
-               value: message.guild.channels.cache.filter(channel => channel.type === 'text').size,
-           },
-           {
-               name: '🎤⠀Alle Voice Kanäle', 
-               value: message.guild.channels.cache.filter(channel => channel.type === 'voice').size,
-           },
-           {
-               name: '👔⠀Anzahl der Rollen',
-               value: message.guild.roles.cache.size,
-           },
-           )   
-
-        message.channel.send(embed)
-        })
-
-            command(client, 'help', (message) => {
-                const { guild } = message
-                const icon = guild.iconURL()
-                const embed = new Discord.MessageEmbed()
-                .setTitle(`**Command Hilfe**`)
-                .setThumbnail(icon)
-                .setColor(`ff0004`)
-                .setFooter('Azoniq Bot 2021', icon)
-                .addFields(
-                    {
-                        name: 'Allgemeine Commands:',
-                        value: `
-**!serverinfo** - Alle Informationen vom Server werden gepostet!
-**!link** - Der Einladungslink vom Bot wird veröffentlicht!
-**!member** - Anzahl der Aktuellen Member! 
-**!level** - Sehe dein aktuelles Level!
-**!covid** - Sehe dir den aktuellen stand des Coron viruses an!` 
-                    },
-                    {
-                        name: 'Glückspiel Commands:',
-                        value: `
-**!Coins** - Anzahl der Coins die du besitzt!
-**!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
-**!buyrank** - Kaufe dir für deine Erspielten Coins, besondere Ränge! `
-                    },
-                    {
-                        name: `Fun Commands`,
-                        value: `
-**!ball/bl** - Stelle dem Bot eine Frage, und er wird diese Weise beantworten!
-**!meme** - Ein Random Reddit Meme wird erscheinen.
-**!suggestion/vorschlag** - Erstelle ein Vorschlag. (**!** Umfrage Channel muss vorhanden sein **!**)
-**!iq** - Überpfrüfe deine Schlauheit
-**!ssp** - Lust auf eine Runde Schere, Stein, Papier?
-**!howgay** - Überprüfe ganz einfach wie Schwull du bist
-**!kwitze** - Lust auf ein paar kurze Witze?`
-                    },
-                    {
-                        name:`Musik Commands`, 
-                        value: `
-**!play** <Link> - Spielt Musik ab 
-**!leave** - Der Bot verlässt den Aktuellen Channel
-**!skip** - Der Bot skipt das laufende Lied`
-                    },
-                    {
-                        name:`Nsfw Command (**!** Adult Content **!**)`,
-                        value:`
-**!4k** - Sehe dir ein paar 4k Nudes an!
-**!anal** - Ehm ja, wierdo...
-**!ass** - Bissel Arsch? 
-**!boobs** - Ein Paar Boobies Schaden nie?!
-**!gwild** - Actelly wylde Nudes
-**!hentai** - Du magst Animies? Ach ok Perfekt...
-**!porn** - Eigentlich ein Porno aber halt als Gif!
-**!pussy** - Du willst paar Katzen? Spaß
-**!solo** - Animie Nudes?!
-**!thigh** - Naja, ein Paar Schenkel... 
-**!wallpaper** - Animie Wallpapers? 
-More Commands Soon `                        
-                    },
-                   
-                )
-        message.channel.send(embed)
-    }) 
+    client.on('message', async message => {
     
-    command(client, 'ban', (message) => {
-        const { member, mentions } = message
-
-        const tag = `<@${member.id}>`
-
-        if (
-           member.hasPermission('ADMINISTRATOR') || 
-           member.hasPermission('BAN_MEMBER') 
-        ) {
-            const target = mentions.users.first()
-            if (target) {
-                const targetMember = message.guild.members.cache.get(target.id)
-                targetMember.ban()
-                message.channel.send(`${tag} Dieser User wurde gebannt!`)
-            } else {
-                message.channel.send(` ${tag} Bitte Tagge jemanden zum Bannen!`)
-            }
-        } else {
-          message.channel.send(
-           `${tag} Du hast keine Rechte diesen Command auszuführen!`
-        )
-      }
-    })
-    
-    command(client, 'kick', (message) => {
-        const { member, mentions } = message
-
-        const tag = `<@${member.id}>`
-
-        if (
-           member.hasPermission('ADMINISTRATOR') || 
-           member.hasPermission('KICK_MEMBER') 
-        ) {
-            const target = mentions.users.first()
-            if (target) {
-                const targetMember = message.guild.members.cache.get(target.id)
-                targetMember.kick()
-                message.channel.send(`${tag} Dieser User wurde gekickt!`)
-            } else {
-                message.channel.send(`${tag} Bitte Tagge jemanden zum Kicken!`)
-            }
-        } else {
-          message.channel.send(
-            `${tag} Du hast keine Rechte diesen Command auszuführen!`
-        )
-        }
-
-    })
-    client.on("message", async message =>{
-        if(!warnFile[message.author.id+message.guild.id]) {
-            warnFile[message.author.id+message.guild.id] = {
-                warns:0,
-                maxwarn: 3
-             }
-         }
-
-         fs.writeFile("./warns.json", JSON.stringify(warnFile), function(err){
-            if(err) console.log(err)
-            })
-        })
 
         client.on("message", function(message){
-
+        })
         if(message.author.bot) return;
 
         if(!coinfile[message.author.id]){
@@ -314,44 +87,6 @@ More Commands Soon `
                 console.log(err);
             }
         })
-
-        if(message.content.startsWith("!warn")){
-            let user = message.mentions.users.first()  
-            let grund = message.content.split(" ").slice(2).join 
- 
-            if(!user) return message.channel.send("Du hast vergessen jemanden zu erwähnen!")
- 
-            if(!grund) grund = "Kein genannter Grund!"
- 
-            let embed = new Discord.MessageEmbed()
-            .setTitle("Warnung!")
-            .setDescription(`Warnung <@!${user.id}>, du wurdest verwarnt!\nGrund: ${grund}`)
-            .setColor("RED")
- 
-            message.channel.send(embed)
- 
-            if(!warnFile[user.id+message.guild.id]){
-                warnFile[user.id+message.guild.id] = {
-                    warns:0,
-                    maxwarn:3,
-                }
-            }
- 
-            warnFile[user.id+message.guild.id].warns += 1
- 
-            if(warnFile[user.id+message.guild.id].warns > warnFile[user.id+message.guild.id].maxwarns){
-                if(message.guild.member(user).kickable == true){
-                    message.channel.send(`<@!${user.id}> wurde wegen zu vielen Verstößen gekickt!`)
-                    message.guild.member(user).kick("Zu viele verwarnungen!")
-                }
-               delete warnFile[user.id+message.guild.id]
-             }
-             
- 
-             fs.writeFile("./warns.json", JSON.stringify(warnFile), function(err){
-                 if(err) console.log(err)
-             })
-        }
         
         if(message.content.startsWith("!flip")){
 
@@ -531,62 +266,9 @@ More Commands Soon `
             
         }
     }) 
-      command(client, 'Admin', (message) => {
-        
-        const { guild } = message
-        const icon = guild.iconURL()
-        const embed = new Discord.MessageEmbed()
-
-        .setTitle(`**Admin-Command Hilfe**`)
-        .setThumbnail(icon)
-        .setColor(`ff0004`)
-        .setFooter('Azoniq Bot 2021', icon)
-        .addFields(
-            {
-                name: '**Moderation Commands**',
-                value: `
-**!ban** <@name> - Bannt den ausgewählten Nutzer! 
-**!kick** <@name> - Kickt den ausgewählten Nutzer!
-**!warn** <@name> - Warnt den ausgewählten Nutzer, dieser wird nach dem 3ten Warn gekickt!
-**!clear** 10,50,100 - Cleart die Letzten 10/50/100 Nachrichten!`
-            },
-            {
-                name: '**Allgemeine Admin Commands**',
-                value: `
-**!createwelcomechannel** <Nachricht> - Ein Welcomechannel wird festgellegt + Nachricht was beim beitreten stehen soll!
-**!createtextchannel** - Erstelle ganz einfach einen Text Channel!
-**!addcoins** <@> <Anzahl> - Gebe eine bestimmte Azahl an Coins an User! 
-`
-            }
-        )
-        message.channel.send(embed)
-
-        
-    })
-
-client.on('message', async message => {
-    if (message.content === "!covid") {
-        const img = 'https://s12.directupload.net/images/210510/3ue7d6xv.png'
-        const data = await covid.all()
-        const embed = new Discord.MessageEmbed()
-        .setThumbnail(img)
-        .setDescription("**Covid-19 Statistik**")
-        .setColor("RED")
-        .addField("Positive Fälle (insgesamt)", data.cases)
-        .addField("Aktive Fälle", data.active)
-        .addField("Heutige Fälle", data.todayCases)
-        .addField("Kritische Fälle", data.critical)
-        .addField("Tode", data.deaths)
-        .addField("Heutige Tode", data.todayDeaths )
-        .addField("Genesende", data.recovered)
-        .addField("Befallende Länder", data.affectedCountries)
-        .addField("Tests", data.tests)
-        message.channel.send(embed)
-    }
-})
 
     const cacheTime = 15 * 1000;
-let data, lastUpdated = 0;
+    let data, lastUpdated = 0;
 
 client.on('message', message => { 
     if(message.content.trim() == STATUS_COMMAND) {

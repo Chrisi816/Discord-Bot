@@ -4,7 +4,6 @@ const Discord = require('discord.js')
 module.exports = {
     commands: ['coins'],
     maxArgs: 1, 
-    expectedArgs: "[KEKW]",
     callback: async (message) => {
         const member = message.mentions.users.first() || message.author
         const target = message.mentions.users.first() || message.author

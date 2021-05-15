@@ -5,7 +5,6 @@ module.exports = {
     commands: ['warlist'],
     minArgs: 1,
     expectedArgs: "<Target user's @>",
-    permissions: 'ADMINISTRATOR',
     callback: async (message, arguments, text) => {
         const target = message.mentions.users.first()
         if (!target) {
@@ -37,5 +36,6 @@ module.exports = {
             }
         })
 
-    }
+    },
+    permissions: 'MANAGE_ROLES',
 }
