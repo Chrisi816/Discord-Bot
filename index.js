@@ -69,8 +69,7 @@ client.on('ready', async () => {
     
     await mongo()
    
-    client.on('message', async message => {
-    
+    client.on('message', async (message, args, guild) => {
 
         client.on("message", function(message){
         })
@@ -81,12 +80,6 @@ client.on('ready', async () => {
                 coins: 100
             }
         }
-
-        fs.writeFile("./coins.json", JSON.stringify(coinfile), err =>{
-            if(err){
-                console.log(err);
-            }
-        })
         
         if(message.content.startsWith("!flip")){
 
