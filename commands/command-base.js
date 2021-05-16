@@ -101,7 +101,7 @@ module.exports = (client, commandOptions) =>  {
 
                 let cooldownString = `${guild.id}-${member.id}-${commands[0]}`
                 if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
-                    message.reply('Wayooo warte mal ein paar Sekunden! ')
+                    message.reply(`Warte mal ${cooldown} Sekunden!! `)
                     return
                 }
 
