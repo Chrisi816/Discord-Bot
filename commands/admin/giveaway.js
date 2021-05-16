@@ -116,7 +116,7 @@ module.exports = {
                  **Giveaway Hosted By: ** ${message.author}`)
                 msg.edit(embed) 
         
-                message.channel.send(`**Congratulations:**\n${response}You've won... **${prize}**.\n${msg.url}`) // send a msg with the winner people
+                message.channel.send(`**Herzlichen Glückwunsch:**\n${response}Du hast... **${prize}**.\n${msg.url} gewonnen! Melde dich so schnell wie möglich bei @꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂ per Dm um dein Geschenk zu erhalten!`) 
             }
             
         }, ms(args[0]));
