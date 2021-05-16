@@ -13,12 +13,15 @@ module.exports = {
     
         let winnerCount = args[1]
         
-        let prize = args.slice(2).join(" ")
+        let prize = args.slice(3).join(" ")
         
         if(!args[1]) return message.channel.send(`**Wie viele Leute können Gewinnen?**`)
+
+        if(!args[2]) return message.channel.send(`Gibt es Irgendwelche Anforderungen?`)
         
-        if(!args[2]) return message.channel.send(`**Was ist der Preis für das Giveaway?**`)
+        if(!args[3]) return message.channel.send(`**Was ist der Preis für das Giveaway?**`)
         
+        const anforderung = args[2]
         message.delete()
         
         var botEmbed = new discord.MessageEmbed()
@@ -27,9 +30,10 @@ module.exports = {
          Reagiere mit 🎉 um mitzumachen!!
          **Preis: **${prize}
          **Gewinner: **${winnerCount}
+         **Anforderungen: **${anforderung}
          **Endet in : **${args[0]}
-         **Endet am:  **${Date.now()+ms(args[0])}
          **Giveaway Hosted By: **${message.author}`)
+         .setTimestamp(`Ends on ${Date.now()+ms(args[0])}`)
          .setColor("#d98a23")
          
         const msg = await message.channel.send(botEmbed)
