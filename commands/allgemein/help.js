@@ -25,11 +25,13 @@ module.exports = {
 **!botinfo** - Es werden Alle einzelheiten des Bots veröffentlicht!
                     `},
                     {
-                        name: 'Glückspiel Commands:',
+                        name: 'Wirtschafts Commands:',
                         value: `
-**!Coins** - Anzahl der Coins die du besitzt!
-**!flip** <Anzahl der Coins> <Zahl oder Kopf> - Du kannst eine Münze werfen und dein Einsatz verdoppeln oder verlieren!
-**!buyrank** - Kaufe dir für deine Erspielten Coins, besondere Ränge! `
+**!daily** - Holle dir alle 24Std einen kleinen Bonus!
+**!work** - Holl dir alle 30 Min deine Auzhalung von Jobcenter ab!
+**!coins** - Anzahl der Coins die du besitzt!
+**!search** - Suche an stellen um Geld zu verdienen!
+`
                     },
                     {
                         name: `Fun Commands`,
@@ -49,6 +51,22 @@ module.exports = {
 **!play** <Link> - Spielt Musik ab 
 **!leave** - Der Bot verlässt den Aktuellen Channel
 **!skip** - Der Bot skipt das laufende Lied`
+                    },
+                    {    
+                        name:`Meme Commands`,
+                        value:`
+**!beautiful** - Spieglein, Spieglein an der Wand, wer is die schönst in diesem Land...
+**!bed** - Hat dich dein Bruder wieder geärgert?
+**!jail** - Was machst du im Knast?
+**!kiss** - Ein küsschen gefällig?
+**!hit** - Ehm ja gut..
+**!rip** - Ruhe im Frieden...
+**!shit** - Ohh da ist jemand ausversehen in Scheiße getreten..
+**!spank** - Schläge? HMMMM
+**!trash** - Kurz mal jemanden mit der Mülltonne verwächselt.. Kann mal passieren! 
+**!trigger** - Bist du getriggert?
+**!wanted** - Holl dir das Geld!
+**!wasted** - F an den gefallenden Bruder..`
                     },
                     {
                         name:`Nsfw Command (**!** Adult Content **!**)`,

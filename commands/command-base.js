@@ -113,7 +113,7 @@ module.exports = (client, commandOptions) =>  {
              maxArgs !== null && arguments.length > maxArgs)
          ) {
 
-            message.reply(`Falscher Syntax! Benutze ${prefix}${alias} ${expectedArgs}`)
+            message.reply(`Falsche Syntax! Benutze ${prefix}${alias} ${expectedArgs}`)
             return
          }
 

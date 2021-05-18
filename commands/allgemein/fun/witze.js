@@ -22,7 +22,6 @@ module.exports = {
     ]
 
         let result = Math.floor((Math.random() * replies.length))
-        let question = args.slice().join(" ");
 
         const embed = new Discord.MessageEmbed()
         .setAuthor(`${message.author.username}`)

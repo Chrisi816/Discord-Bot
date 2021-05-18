@@ -1,6 +1,7 @@
 const mongo = require('../../mongo')
 const warnSchema = require('../../schemas/warn-schema')
 const Discord = require('discord.js')
+const mongoose = require('mongoose')
 
 module.exports = {
     commands: 'warn',
