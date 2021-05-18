@@ -36,7 +36,7 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
              ++level
              xp -= needed
 
-             message.reply(`Du bist jetzt Level ${level}! Du brauchst ${getNeededXP(level)} XP um Aufzusteigen!`)
+             message.reply(`Du bist jetzt Level ${level}!`)
 
              await profileSchema.updateOne({
                  guildId,
@@ -45,6 +45,15 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
              level,
              xp
              })
+             if(user.level == 1) {
+                const role = message.guild.roles.cache.find(role => role.name == "Level 1 ")
+                if(!role) await message.guild.roles.create({
+                    name: "Level 1 ",
+                    color: "#2f3134",
+                }).catch(err => console.log(err))
+                if (message.member.roles.cache.has(role.id)) return;
+                else await message.member.roles.add(role.id)
+            }
          }
        } finally {
            mongoose.connection.close()

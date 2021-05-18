@@ -29,8 +29,6 @@ const loadCommands = require('./commands/load-commands')
 const scalingChannel2 = require('./channels/scaling-channel2')
 const levels = require('./level');
 
-const ranks = ["Normie",150,"Experienced User",500,"Grinder",1500,"Legend",5000, "list"];
-
 const SERVER_ADDRESS = '176.57.152.248'; 
 const SERVER_PORT = 25565; 
 
@@ -68,7 +66,6 @@ client.on('ready', async () => {
     },4000)
     
     await mongo()
-
     const cacheTime = 15 * 1000;
     let data, lastUpdated = 0;
 
