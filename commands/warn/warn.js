@@ -1,5 +1,5 @@
-const mongo = require('../../mongo')
-const warnSchema = require('../../schemas/warn-schema')
+const mongo = require('../../mongo/mongo')
+const warnSchema = require('../../mongo/schemas/warn-schema')
 const Discord = require('discord.js')
 const mongoose = require('mongoose')
 
@@ -31,7 +31,6 @@ module.exports = {
         .setTitle(`**!! WARN !!**`)
         .setColor(`RED`)
         .setDescription(`${user} Du wurdest Verwarnt!`)
-        .addField(`Grund:`, reason)
         message.channel.send(embed)
 
         await mongo().then(async mongoose => {

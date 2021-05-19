@@ -1,4 +1,4 @@
-const economy = require('../../econemy')
+const economy = require('../../mongo/econemy')
 const Discord = require('discord.js')
 
 module.exports = {

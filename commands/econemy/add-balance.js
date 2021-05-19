@@ -1,4 +1,4 @@
-const economy = require('../../econemy')
+const economy = require('../../mongo/econemy')
 
 module.exports = {
     commands: ['addcoins'],

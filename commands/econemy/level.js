@@ -1,6 +1,6 @@
-const level = require('../../level')
+const level = require('../../mongo/level')
 const Discord = require('discord.js')
-const profileSchema = require('../../schemas/profile-schema')
+const profileSchema = require('../../mongo/schemas/profile-schema')
 const Canvacord = require('canvacord')
 
 module.exports = {
