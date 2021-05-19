@@ -1,6 +1,6 @@
-const mongo = require('../mongo/mongo')
+const mongo = require('./mongo')
 const command = require('../commands')
-const welcomeSchema = require('../mongo/schemas/welcome-schema')
+const welcomeSchema = require('./schemas/welcome-schema')
 const { mongoose } = require('mongoose')
 
 module.exports = (client) => {
