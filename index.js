@@ -12,7 +12,7 @@ const PREFIX = '!'
 const db = require('quick.db')
 const NSFW = require("discord-nsfw");
 const nsfw = new NSFW();
-const mongo = require('./mongo')
+const mongo = require('./mongo/mongo')
 const command = require('./commands')
 const commands = require('./commands')
 const membercount = require('./channels/member-count')
@@ -20,14 +20,14 @@ const antiAd = require('./Invites/anti-ad')
 const scalingChannels1 = require('./channels/scaling-channel1')
 const scalingChannels = require('./channels/scaling-channels')
 const inviteNotifications = require('./Invites/invite-notifications')
-const coinfile = require("./Json/coins.json")
 const { countReset } = require('console')
 const { isRegExp } = require('util')
 const { Mongoose } = require('mongoose')
 const welcome = require('./channels/welcome')
 const loadCommands = require('./commands/load-commands')
 const scalingChannel2 = require('./channels/scaling-channel2')
-const levels = require('./level');
+const levels = require('./mongo/level');
+const { base } = require('./mongo/schemas/welcome-schema');
 
 const SERVER_ADDRESS = '176.57.152.248'; 
 const SERVER_PORT = 25565; 
@@ -66,6 +66,54 @@ client.on('ready', async () => {
     },4000)
     
     await mongo()
+
+    client.on('messageReactionAdd', async(reaction, user) => {
+        if(reaction.message.partial) await reaction.message.fetch();
+        if(reaction.partial) await reaction.fetch();
+        if(user.bot) return;
+        if(!reaction.message.guild) return;
+        if(reaction.message.id === '844665108834811925'){
+            if(reaction.emoji.name === '📢') {
+                await reaction.message.guild.members.cache.get(user.id).roles.add('814554861781123103')
+            }
+            if(reaction.emoji.name === '📱') {
+                await reaction.message.guild.members.cache.get(user.id).roles.add('830589132350292019')
+            }
+            if(reaction.emoji.name === '🎬') {
+                await reaction.message.guild.members.cache.get(user.id).roles.add('830882003230261248')
+            }
+            if(reaction.emoji.name === '🎮') {
+                await reaction.message.guild.members.cache.get(user.id).roles.add('830882368310738964')
+            }
+            if(reaction.emoji.name === '❗') {
+                await reaction.message.guild.members.cache.get(user.id).roles.add('830882915680124928')
+            }
+        }
+    })
+    client.on('messageReactionRemove', async(reaction, user) => {
+        if(reaction.message.partial) await reaction.message.fetch();
+        if(reaction.partial) await reaction.fetch();
+        if(user.bot) return;
+        if(!reaction.message.guild) return;
+        if(reaction.message.id === '844665108834811925'){
+            if(reaction.emoji.name === '📢') {
+                await reaction.message.guild.members.cache.get(user.id).roles.remove('814554861781123103')
+            }
+            if(reaction.emoji.name === '📱') {
+                await reaction.message.guild.members.cache.get(user.id).roles.remove('830589132350292019')
+            }
+            if(reaction.emoji.name === '🎬') {
+                await reaction.message.guild.members.cache.get(user.id).roles.remove('830882003230261248')
+            }
+            if(reaction.emoji.name === '🎮') {
+                await reaction.message.guild.members.cache.get(user.id).roles.remove('830882368310738964')
+            }
+            if(reaction.emoji.name === '❗') {
+                await reaction.message.guild.members.cache.get(user.id).roles.remove('830882915680124928')
+            }
+        }
+    })
+
     const cacheTime = 15 * 1000;
     let data, lastUpdated = 0;
 
