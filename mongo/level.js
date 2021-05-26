@@ -39,14 +39,14 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
              message.reply(`Du bist jetzt Level ${level}!`)
 
              if(level == 1) {
-                let role = message.guild.roles.cache.find(role => role.name == "Anfänger [1] ")
+                let role = message.guild.roles.cache.find(role => role.name == "Anfänger [1]")
                 if (!role) await message.guild.roles.create({
                     data: {
                     name: "Anfänger [1]",
                     color: "GREY",
                    }
                 }).catch(err => console.log(err))
-                role = message.guild.roles.cache.find(role => role.name == "Anfänger [1] ")
+                role = message.guild.roles.cache.find(role => role.name == "Anfänger [1]")
                 if(message.member.roles.cache.has(role.id)) return
                 else await message.member.roles.add(role.id)
             }
