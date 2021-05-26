@@ -15,6 +15,7 @@ const nsfw = new NSFW();
 const mongo = require('./mongo/mongo')
 const command = require('./commands')
 const commands = require('./commands')
+const rolecount = require('./role-count')
 const membercount = require('./channels/member-count')
 const antiAd = require('./Invites/anti-ad')
 const scalingChannels1 = require('./channels/scaling-channel1')
@@ -30,7 +31,8 @@ const levels = require('./mongo/level');
 const { base } = require('./mongo/schemas/welcome-schema');
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-const DisTube = require('distube')
+const DisTube = require('distube');
+const roleCount = require('./role-count');
 
 
 const SERVER_ADDRESS = '176.57.152.248'; 
@@ -54,6 +56,7 @@ levels(client)
 client.on('ready', async () => {
     console.log('Ich bin Bereit!')
     membercount(client)
+    roleCount(client)
     scalingChannels(client)
     scalingChannels1(client)
     scalingChannel2(client)
