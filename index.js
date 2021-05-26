@@ -28,6 +28,10 @@ const loadCommands = require('./commands/load-commands')
 const scalingChannel2 = require('./channels/scaling-channel2')
 const levels = require('./mongo/level');
 const { base } = require('./mongo/schemas/welcome-schema');
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+const DisTube = require('distube')
+
 
 const SERVER_ADDRESS = '176.57.152.248'; 
 const SERVER_PORT = 25565; 
@@ -113,6 +117,18 @@ client.on('ready', async () => {
             }
         }
     })
+    client.on("guildMemberAdd", async member => {
+        const guild = client.guilds.cache.get('775033960300019732')
+        const role = guild.roles.cache.get("775035672251596811")
+
+        await member.roles.add(role.id)
+    })   
+    client.on("guildMemberAdd", async member => {
+        const guild = client.guilds.cache.get('775033960300019732')
+        const role = guild.roles.cache.get("830588799331074088")
+
+        await member.roles.add(role.id)
+    }) 
 
     const cacheTime = 15 * 1000;
     let data, lastUpdated = 0;
