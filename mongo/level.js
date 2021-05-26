@@ -42,7 +42,7 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
                 let role = message.guild.roles.cache.find(role => role.name == "Anfänger [1] ")
                 if (!role) await message.guild.roles.create({
                     data: {
-                    name: "Level 1",
+                    name: "Anfänger [1]",
                     color: "GREY",
                    }
                 }).catch(err => console.log(err))
@@ -54,7 +54,7 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
                 let role = message.guild.roles.cache.find(role => role.name == "Erfahrender [5]")
                 if (!role) await message.guild.roles.create({
                     data: {
-                    name: "Erfahrender [Level 5]",
+                    name: "Erfahrender [5]",
                     color: "GREY",
                    }
                 }).catch(err => console.log(err))
@@ -63,14 +63,14 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
                 else await message.member.roles.add(role.id)
             }
             if(level == 10) {
-                let role = message.guild.roles.cache.find(role => role.name == "Master[10]")
+                let role = message.guild.roles.cache.find(role => role.name == "Master [10]")
                 if (!role) await message.guild.roles.create({
                     data: {
-                    name: "Master[10]",
+                    name: "Master [10]",
                     color: "GREY",
                    }
                 }).catch(err => console.log(err))
-                role = message.guild.roles.cache.find(role => role.name == "Master[10]")
+                role = message.guild.roles.cache.find(role => role.name == "Master [10]")
                 if(message.member.roles.cache.has(role.id)) return
                 else await message.member.roles.add(role.id)
             }
