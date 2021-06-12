@@ -1,7 +1,135 @@
 module.exports = { 
 commands: 'lock', 
 callback: async(message) => {
-   message.channel.send(`
-if(!args[0]) return message.channel.send(`**Wie lang soll das Giveaway gehen?**`) if(!args[0].endsWith("s")&&!args[0].endsWith("h")&&!args[0].endsWith("d")&&!args[0].endsWith("m")) return message.channel.send(`**Wie lang soll das Giveaway gehen?**`) if(isNaN(args[0][0])) return message.channel.send(`**Wie lang soll das Giveaway gehen?**`) let winnerCount = args[1] let prize = args.slice(3).join(" ") if(!args[1]) return message.channel.send(`**Wie viele Leute können Gewinnen?**`) if(!args[2]) return message.channel.send(`Gibt es Irgendwelche Anforderungen?`) if(!args[3]) return message.channel.send(`**Was ist der Preis für das Giveaway?**`) const anforderung = args[2] message.delete() var botEmbed = new discord.MessageEmbed() .setTitle("🎉 **GIVEAWAY** 🎉") .setDescription(` Reagiere mit 🎉 um mitzumachen!! **Preis: **${prize} **Gewinner: **${winnerCount} **Anforderungen: **${anforderung} **Endet in : **${args[0]} **Giveaway Hosted By: **${message.author}`) .setTimestamp(`Ends on ${Date.now()+ms(args[0])}`) .setColor("#d98a23") const msg = await message.channel.send(botEmbed) msg.react('🎉') setTimeout(function () { var random = 0; var winners = []; var inList = false; const peopleReacted = msg.reactions.cache.get("🎉").users.cache.array(); for (let i = 0; i < peopleReacted.length; i++) { if(peopleReacted[i].id == Client.user.id){ peopleReacted.splice(i,1); continue; } } if(peopleReacted.length == 0) { const embed = new discord.MessageEmbed() .setColor("#ff0000") .setTitle("🎉 **GIVEAWAY ENDS** 🎉") .setDescription(`**Es gibt keinen Gewinner da keiner Mitgemacht hat!** **Giveaway Hosted By: **${message.author}`) msg.edit(embed) return message.channel.send(`Es gibt keinen Gewinner da keiner Mitgemacht hat!! :(\n${msg.url}`) } if(peopleReacted.length < winnerCount) { const embed = new discord.MessageEmbed() .setColor("#ff0000") .setTitle("🎉 **GIVEAWAY ENDS** 🎉") .setDescription(`Es gibt keinen Gewinner da keiner Mitgemacht hat!! **Giveaway Hosted By: **${message.author}`) msg.edit(embed) return message.channel.send(`Es gibt keinen Gewinner da keiner Mitgemacht hat!! :(\n${msg.url}`) } for (let y = 0; y < winnerCount; y++) { inList = false; random = Math.floor(Math.random() * peopleReacted.length); for (let o = 0; o < winners.length; o++) { if(winners[o] == peopleReacted[random]){ inList = true; y--; break; } }`)
+   message.channel.send(`const mongo = require('./mongo')
+const profileSchema = require('./schemas/profile-schema')
+
+module.exports = (client) => {
+    client.on('message', (message) => {
+        const { guild, member } = message
+        if(message.author.bot) return;
+        addXP(guild.id, member.id, Math.floor(Math.random() * 12) + 10, message)
+    })
+}
+
+const getNeededXP = (level) => level * level * 70
+
+const addXP = async (guildId, userId, xpToAdd, message) => {
+   await mongo().then(async (mongoose) => {
+       try{
+         const result = await profileSchema.findOneAndUpdate(
+         {
+            guildId,
+            userId
+         }, {
+             guildId,
+             userId,
+             $inc: {
+                 xp: xpToAdd
+             }
+         }, {
+             upsert: true,
+             new: true
+         })
+
+         let { xp, level } = result
+         const needed = getNeededXP(level)
+
+         if (xp >= needed) {
+             ++level
+             xp -= needed
+
+             message.reply(`Du bist jetzt Level ${level}!`)
+
+             if(level == 3) {
+                let role = message.guild.roles.cache.find(role => role.name == "Anfänger [3]")
+                if (!role) await message.guild.roles.create({
+                    data: {
+                    name: "Anfänger [3]",
+                    color: "GREY",
+                   }
+                }).catch(err => console.log(err))
+                role = message.guild.roles.cache.find(role => role.name == "Anfänger [3]")
+                if(message.member.roles.cache.has(role.id)) return
+                else await message.member.roles.add(role.id)
+            }
+            if(level == 5) {
+                let role = message.guild.roles.cache.find(role => role.name == "Erfahrender [5]")
+                if (!role) await message.guild.roles.create({
+                    data: {
+                    name: "Erfahrender [5]",
+                    color: "GREY",
+                   }
+                }).catch(err => console.log(err))
+                role = message.guild.roles.cache.find(role => role.name == "Erfahrender [5]")
+                if(message.member.roles.cache.has(role.id)) return
+                else await message.member.roles.add(role.id)
+            }
+            if(level == 10) {
+                let role = message.guild.roles.cache.find(role => role.name == "Master [10]")
+                if (!role) await message.guild.roles.create({
+                    data: {
+                    name: "Master [10]",
+                    color: "GREY",
+                   }
+                }).catch(err => console.log(err))
+                role = message.guild.roles.cache.find(role => role.name == "Master [10]")
+                if(message.member.roles.cache.has(role.id)) return
+                else await message.member.roles.add(role.id)
+            }
+            if(level == 15) {
+                let role = message.guild.roles.cache.find(role => role.name == "Lord [15]")
+                if (!role) await message.guild.roles.create({
+                    data: {
+                    name: "Lord [15]",
+                    color: "GREY",
+                   }
+                }).catch(err => console.log(err))
+                role = message.guild.roles.cache.find(role => role.name == "Lord [15]")
+                if(message.member.roles.cache.has(role.id)) return
+                else await message.member.roles.add(role.id)
+            }
+            if(level == 25) {
+                let role = message.guild.roles.cache.find(role => role.name == "XP Glitcher [25]")
+                if (!role) await message.guild.roles.create({
+                    data: {
+                    name: "XP Glitcher [25]",
+                    color: "GREY",
+                   }
+                }).catch(err => console.log(err))
+                role = message.guild.roles.cache.find(role => role.name == "XP Glitcher [25]")
+                if(message.member.roles.cache.has(role.id)) return
+                else await message.member.roles.add(role.id)
+            }
+            if(level == 50) {
+                let role = message.guild.roles.cache.find(role => role.name == "King of Chatting [50]")
+                if (!role) await message.guild.roles.create({
+                    data: {
+                    name: "King of Chatting [50]",
+                    color: "GREY",
+                   }
+                }).catch(err => console.log(err))
+                role = message.guild.roles.cache.find(role => role.name == "King of Chatting [50]")
+                if(message.member.roles.cache.has(role.id)) return
+                else await message.member.roles.add(role.id)
+            }
+
+             await profileSchema.updateOne({
+                 guildId,
+                 userId
+             }, {
+             level,
+             xp
+             })
+         }
+       } finally {
+           mongoose.connection.close()
+       }
+   })
+}
+
+module.exports.addXP = addXP`)
+   
+
 
 }
