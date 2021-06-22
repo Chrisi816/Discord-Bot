@@ -1,7 +1,7 @@
 const discord = require('discord.js')
 
 module.exports = {
-    commands:"antislowmode",
+    commands:["antislowmode", "asm"],
     callback: async(message, args) => {
 
         message.channel.setRateLimitPerUser(0)
