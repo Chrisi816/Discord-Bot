@@ -15,11 +15,13 @@ module.exports = {
             {
                 name: '**Moderation Commands**',
                 value: `
-**!ban** <@name> - Bannt den ausgewählten Nutzer! 
-**!kick** <@name> - Kickt den ausgewählten Nutzer!
-**!warn** <@name> - Warnt den ausgewählten Nutzer!
-**!warnlist** - Alle Einträge einer Person werden gepostet!
-**!clear** 10,50,100 - Cleart die Letzten 10/50/100 Nachrichten!`
+**!ban** <@name> - Bannt den ausgewählten Nutzer.
+**!kick** <@name> - Kickt den ausgewählten Nutzer.
+**!warn** <@name> - Warnt den ausgewählten Nutzer.
+**!warnlist** - Alle Einträge einer Person werden gepostet.
+**!clear** 10,50,100 - Cleart die Letzten 10/50/100 Nachrichten.
+**!slowmode** {sekunden} {grund} - Ein Channel wird in den Slowmode gesetzt.
+**!antislowmode, asm** - Schaltet den Slowmode aus. `
             },
             {
                 name: '**Allgemeine Admin Commands**',
