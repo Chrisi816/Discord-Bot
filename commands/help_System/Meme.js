@@ -12,12 +12,12 @@ module.exports = {
                 .setFooter('Azoniq Bot 2021', icon)
                 .addField('⠀ ', `
 **!meme** - Ein Random Reddit Meme wird erscheinen.
-**!beautiful** - Spieglein, Spieglein an der Wand, wer is die schönst in diesem Land...
+**!beautiful** - Spieglein, Spieglein an der Wand, wer ist die schönst in diesem Land…
 **!bed** - Hat dich dein Bruder wieder geärgert?
-**!jail** - Was machst du im Knast?
-**!kiss** - Ein küsschen gefällig?
+**!jail** - Was machst du da im Knast?
+**!kiss** - Ein Küsschen gefällig?
 **!hit** - Ehm ja gut..
-**!rip** - Ruhe im Frieden...
+**!rip** - Ruhe in Frieden...
 **!shit** - Ohh da ist jemand ausversehen in Scheiße getreten..
 **!spank** - Schläge? HMMMM
 **!trash** - Kurz mal jemanden mit der Mülltonne verwächselt.. Kann mal passieren! 

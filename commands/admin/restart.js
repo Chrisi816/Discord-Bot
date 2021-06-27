@@ -1,3 +1,5 @@
+// Copyright by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#0001 \\
+
 module.exports = {
     commands:"restart",
     callback: async(message, args) => {

@@ -1,3 +1,4 @@
+// Copyright by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#0001 \\
 module.exports = {
     commands: 'banned',
     callback: async (message, args, client) => {

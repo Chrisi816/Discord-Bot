@@ -1,3 +1,5 @@
+// Copyright by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#0001 \\
+
 const Discord = require('discord.js')
 
 module.exports = {

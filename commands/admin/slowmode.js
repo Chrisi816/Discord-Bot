@@ -1,3 +1,5 @@
+// Copyright by ꧁☬ℭ𝔥𝔯𝔦𝔰𝔦☬꧂#0001 \\
+
 const discord = require('discord.js')
 const { permissions } = require('./clear50')
 

@@ -1,3 +1,5 @@
+// Copyright by UltraX \\
+
 const discord = require('discord.js')
 const fetch = require('node-fetch')
 
