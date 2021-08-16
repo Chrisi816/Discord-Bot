@@ -21,7 +21,6 @@ module.exports = (client) => {
         if (content.includes('discord.gg/')) {
             const isOurInvite = await isInvite(guild, code)
             if (!isOurInvite) {
-                member.kick()
                 message.delete()
             }
         }
