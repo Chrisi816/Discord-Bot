@@ -4,7 +4,7 @@ const nsfw = new NSFW();
 
 module.exports = {
     commands: ['ass'],
-    cooldown: 4,
+    cooldown: 0,
     description: 'ass!',
     callback: async (message, discord) => {
         const image = await nsfw.ass();
