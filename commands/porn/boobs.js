@@ -4,7 +4,7 @@ const nsfw = new NSFW();
 
 module.exports = {
     commands: ['Boobs'],
-    cooldown: 4,
+    cooldown: 0,
     description: 'Ein Boobs bild wird gepostet!',
     callback: async (message, discord) => {
         const image = await nsfw.boobs();
