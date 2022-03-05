@@ -60,7 +60,7 @@ client.on('ready', async () => {
     scalingChannels(client)
     scalingChannels1(client)
     scalingChannel2(client)
-    welcome(client)
+
 
     let statuse = [
     `!help auf ${client.guilds.cache.size} Servern`,
